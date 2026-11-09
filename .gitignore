@@ -1,0 +1,7 @@
+dart_key.txt
+companies/*
+!companies/README.md
+dist/
+__pycache__/
+*.pyc
+*.db

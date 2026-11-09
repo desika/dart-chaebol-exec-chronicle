@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{CO_NAME}} 임원 도감</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3efe6; --panel:#faf8f3; --panel2:#efeadf; --ink:#17181c; --ink2:#3d3c38; --mute:#6c6a63; --hair:#d9d3c6; --hair2:#c6bfae;
+  --ox:#8c2f39; --navy:#1f3a5f;
+  --t1:#1baf7a; --t2:#2a78d6; --t3:#c98500; --tjm:#e87ba4; --tgray:#b9b3a6; --tsecom:#c9a35a;
+  --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100; --c5:#e87ba4; --c6:#6250d6; --c7:#008300; --c8:#8a8578;
+  --serif:"Noto Serif KR",serif; --sans:"IBM Plex Sans KR","Malgun Gothic",sans-serif; --mono:"IBM Plex Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.6 var(--sans)}
+:root{--page:1600px}
+body{min-width:var(--page)}
+.top,main{width:var(--page);margin:0 auto;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+.num{font-family:var(--sans);font-variant-numeric:tabular-nums}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:28px 40px 0;border-bottom:1px solid var(--ink)}
+.top-bg{border-bottom:1px solid var(--ink)}.brand{min-width:0;flex:1 1 auto}nav.tabs{flex:0 0 auto}
+.brand h1{font:700 30px/1.1 var(--serif);margin:0;letter-spacing:-.01em}
+.brand h1 em{font-style:normal;color:var(--ox)}
+.brand .sub{color:var(--mute);font-size:12.5px;margin:6px 0 14px;letter-spacing:.02em}
+.brand .sub b{color:var(--ink2);font-weight:500}
+nav.tabs{display:flex;gap:2px}
+nav.tabs a{white-space:nowrap;padding:10px 14px 12px;font-size:13.5px;font-weight:500;color:var(--mute);border:1px solid transparent;border-bottom:none;position:relative;top:1px}
+nav.tabs a.on{color:var(--ink);background:var(--panel);border-color:var(--ink);border-bottom:1px solid var(--panel)}
+nav.tabs a:hover{color:var(--ink)}
+main{padding:26px 40px 60px}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:stretch}
+.panel{background:var(--panel);border:1px solid var(--hair);padding:18px 20px;flex:1 1 320px;min-width:0;overflow:hidden}
+.panel h2{font:600 15px/1.3 var(--serif);margin:0 0 10px;letter-spacing:.01em;display:flex;align-items:baseline;gap:10px}
+.panel h2 small{font:400 12px var(--sans);color:var(--mute)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--hair);margin:0 0 20px}
+.fact{padding:12px 14px 12px 0;border-right:1px solid var(--hair);padding-left:14px}
+.fact:first-child{padding-left:0}.fact:last-child{border-right:none}
+.fact b{display:block;font:600 26px/1.1 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink);letter-spacing:-.02em}
+.fact b i{font-style:normal;font-size:14px;color:var(--mute);margin-left:2px}
+.fact span{font-size:12px;color:var(--mute)}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px;font-size:13px}
+.tools label{color:var(--mute)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--hair2);background:var(--panel);padding:4px 11px;border-radius:999px;cursor:pointer;font-size:12.5px;color:var(--ink2);user-select:none}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+select,input[type=search]{font:13px var(--sans);padding:6px 9px;border:1px solid var(--hair2);background:#fff;border-radius:4px;color:var(--ink)}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th{font-weight:600;text-align:left;padding:8px 8px;border-bottom:1px solid var(--ink);white-space:nowrap;cursor:pointer;background:var(--panel);position:sticky;top:0;z-index:1}
+table.t th.sorted:after{content:" ↓";color:var(--mute)}
+table.t td{padding:7px 8px;border-bottom:1px solid var(--hair);vertical-align:top;white-space:nowrap}
+table.t td.wrap,table.t td.raw{white-space:normal;max-width:420px}
+table.t td.wrap2{white-space:normal;min-width:150px;max-width:260px;line-height:1.45}
+table.t tr:hover td{background:#f1ece0}
+table.t td.n{font-family:var(--sans);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+table.t td .tag{display:inline-block;font-size:11px;padding:1px 7px;border:1px solid var(--hair2);border-radius:3px;color:var(--ink2);margin-right:4px;background:#fff}
+.scroll{overflow:auto;max-height:70vh;border:1px solid var(--hair)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:8px 0}
+.legend i{display:inline-block;width:14px;height:10px;vertical-align:-1px;margin-right:5px;border-radius:2px}
+.legend i.hatch{background:repeating-linear-gradient(135deg,#b9b3a6 0 2px,transparent 2px 5px);border:1px solid #b9b3a6}
+.tip{position:fixed;pointer-events:none;background:#17181c;color:#f3efe6;padding:9px 12px;font-size:12.5px;line-height:1.5;border-radius:4px;max-width:360px;z-index:50;display:none;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tip b{color:#fff}.tip .m{color:#bdb6a6}
+svg text{font-family:var(--sans)}
+svg .mono{font-family:var(--mono)}
+.tl-wrap{overflow:auto;border:1px solid var(--hair);background:var(--panel)}
+.tl-wrap svg{display:block}
+.tl-row:hover rect.bg{fill:#ece6d8}
+.name-link{cursor:pointer}
+.name-link:hover{fill:var(--ox)}
+.kv{display:grid;grid-template-columns:minmax(140px,max-content) 1fr;gap:4px 14px;font-size:13px}
+.kv dt{color:var(--mute);white-space:nowrap}.kv dd{margin:0}
+.person-head{display:flex;gap:26px;align-items:flex-start;border-bottom:1px solid var(--ink);padding-bottom:18px;margin-bottom:18px;flex-wrap:wrap}
+.person-head h1{font:700 34px/1.1 var(--serif);margin:0 0 4px}
+.person-head .meta{color:var(--mute);font-size:13px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.badge{font-size:11.5px;padding:2px 9px;border-radius:3px;border:1px solid var(--hair2);background:#fff;color:var(--ink2)}
+.badge.ox{border-color:var(--ox);color:var(--ox)}.badge.navy{border-color:var(--navy);color:var(--navy)}
+.changed{background:#fbe9c8 !important}
+.rail{position:relative;padding-left:92px;margin:6px 0}
+.rail:before{content:"";position:absolute;left:76px;top:4px;bottom:4px;width:1px;background:var(--hair2)}
+.rail .it{position:relative;padding:3px 0 7px}
+.rail .it .y{position:absolute;left:-92px;width:66px;text-align:right;font:500 12px var(--sans);font-variant-numeric:tabular-nums;color:var(--mute)}
+.rail .it .y i{font-style:normal;color:#a39c8c;font-size:11px;margin-left:3px}
+.rail .it:before{content:"";position:absolute;left:-21px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--ink);border:2px solid var(--panel)}
+.rail .it.edu:before{background:var(--c4)}
+.rail .it.appt:before{background:var(--ox);width:9px;height:9px;left:-22px;top:8px}
+.rail .it .t{font-size:13.5px}
+.rail .it .t small{color:var(--mute);margin-left:6px}
+.rel a{display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;border:1px solid var(--hair2);border-radius:3px;font-size:12.5px;background:#fff}
+.rel a:hover{border-color:var(--ox);color:var(--ox)}
+.note{font-size:12.5px;color:var(--mute);margin:8px 0 0}
+.bars{display:flex;flex-direction:column;gap:5px}
+.bar{display:grid;grid-template-columns:150px 1fr 60px;align-items:center;gap:10px;font-size:12.5px}
+.bar .b{height:14px;background:var(--navy);border-radius:0 3px 3px 0;min-width:2px}
+.bar .v{font-variant-numeric:tabular-nums;color:var(--ink2);text-align:right}
+.matrix td.n{font-variant-numeric:tabular-nums}
+.matrix td.hot{background:#fbe9c8}
+.matrix td.hot2{background:#f5c87a}
+details.src summary{cursor:pointer;color:var(--mute);font-size:12.5px}
+pre.raw{white-space:pre-wrap;font:12px/1.6 var(--sans);background:#fff;border:1px solid var(--hair);padding:10px;max-height:260px;overflow:auto}
+.footer{margin-top:40px;color:var(--mute);font-size:12px;border-top:1px solid var(--hair);padding-top:10px}
+.ic{vertical-align:-3px;margin-right:6px;flex:none}
+h2 .ic{color:var(--mute)}
+.fact .ic{display:block;margin:0 0 6px;color:var(--mute)}
+nav.tabs a .ic{margin-right:5px;vertical-align:-3px}
+.badge .ic{margin-right:4px;vertical-align:-2px}
+.logo{height:30px;vertical-align:-5px;margin-right:10px}
+
+.pop{position:fixed;z-index:60;background:var(--panel);border:1px solid var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:12px 14px 10px;min-width:420px;max-width:760px;max-height:60vh;overflow:auto;font-size:13px;border-radius:6px}
+.pop h4{margin:0 0 8px;font:600 14px var(--serif);display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.pop h4 small{font:400 12px var(--sans);color:var(--mute)}
+.pop .x{cursor:pointer;color:var(--mute);font-size:16px;line-height:1;padding:0 2px}
+.pop table{width:100%;border-collapse:collapse}.pop td{padding:4px 8px;border-bottom:1px solid var(--hair);vertical-align:top;white-space:nowrap}.pop td.wrap{white-space:normal;max-width:300px}
+.pop td a{font-weight:600;border-bottom:1px solid var(--hair2)}
+.pop .dead{color:var(--mute)}
+.pop .pstat{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 8px;padding:6px 8px;background:var(--bg);border-radius:4px;font-size:12px;color:var(--ink2)}.pop .pstat b{font-weight:600;color:var(--ink)}.pop .pstat span{white-space:nowrap}
+.clk{cursor:pointer}.clk:hover{outline:2px solid var(--acc);outline-offset:-2px}
+td.clk:hover{background:#f1e4c0 !important}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div id="font-chips" style="display:flex;gap:6px;align-items:center;margin:0 0 10px;font-size:12px;color:var(--mute)">글자 <span class="chip" data-z="1" style="padding:2px 10px">소</span><span class="chip" data-z="1.15" style="padding:2px 10px">중</span><span class="chip" data-z="1.3" style="padding:2px 10px">대</span></div>
+    <h1>{{CO_LOGO}}{{CO_NAME}} 임원 <em>도감</em></h1>
+    <div class="sub">DART 공시로 복원한 임원 생애 · <b id="hd-count"></b> · 기준 <b id="hd-date"></b> · 단일 파일 · <b id="hd-ver"></b></div>
+  </div>
+  <div id="scope-chips" style="align-self:center;margin-right:18px;flex:none;display:flex;flex-wrap:nowrap;border:1px solid var(--ink);border-radius:6px;overflow:hidden;font-size:13px;font-weight:600;white-space:nowrap"><span class="chip on" data-v="all" style="border:none;border-radius:0;padding:7px 14px;white-space:nowrap">전체 보기 <span class="num" id="cnt-all"></span></span><span class="chip" data-v="active" style="border:none;border-radius:0;padding:7px 14px;border-left:1px solid var(--ink);white-space:nowrap">현직자만 <span class="num" id="cnt-active"></span></span></div>
+  <nav class="tabs" id="tabs">
+    <a href="#/timeline">생애선</a><a href="#/people">명부</a><a href="#/origins">출신·스펙</a><a href="#/pay">보수·퇴직금</a><a href="#/affil">자회사·인선</a><a href="#/network">관계망</a><a href="#/about">자료·규칙</a>
+  </nav>
+</header>
+<main id="main"></main>
+<div class="tip" id="tip"></div>
+<script id="data" type="application/json">/*__DATA__*/</script>
+<script id="affil" type="application/json">/*__AFFIL__*/</script>
+<script>
+const APP_VERSION='0.9.5';
+
+const ICON={
+ timeline:'<path d="M4 19h16"/><path d="M4 15h8"/><path d="M4 11h12"/><path d="M4 7h6"/><circle cx="18" cy="7" r="1.6"/>',
+ play:'<path d="M7 5v14l11-7z"/>',
+ list:'<path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><circle cx="5" cy="6" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="5" cy="18" r="1"/>',
+ route:'<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h6a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h4"/>',
+ coins:'<circle cx="9" cy="8" r="5"/><path d="M14 8a5 5 0 1 1 0 10"/><path d="M4 12v3a5 5 0 0 0 10 0v-3"/>',
+ building:'<path d="M4 21V5l8-2v18"/><path d="M12 9l8 2v10"/><path d="M4 21h16"/><path d="M8 8h1M8 12h1M8 16h1M15 13h1M15 17h1"/>',
+ network:'<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4"/><path d="M12 11l-5.5 6.5"/><path d="M12 11l5.5 6.5"/>',
+ book:'<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h8M8 15h5"/>',
+ users:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 11a3 3 0 1 0-2-5.2"/><path d="M15 14.5a6 6 0 0 1 6 5.5"/>',
+ user:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+ userOff:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/><path d="M4 4l16 16"/>',
+ calendar:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/>',
+ cake:'<path d="M4 20h16"/><path d="M5 20v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/><path d="M12 11V8"/><path d="M12 5.5c.8 0 1.5-.7 1.5-1.5S12 1.5 12 1.5 10.5 3.2 10.5 4 11.2 5.5 12 5.5z"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+ exit:'<path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/><path d="M9 12h11"/><path d="M17 9l3 3-3 3"/>',
+ cash:'<rect x="3" y="7" width="18" height="11" rx="2"/><circle cx="12" cy="12.5" r="2.5"/><path d="M6 10.5h.01M18 14.5h.01"/>',
+ arrowUp:'<path d="M12 19V5"/><path d="M6 11l6-6 6 6"/>',
+ flag:'<path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/>',
+ school:'<path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11v4c0 1.5 2.3 3 5 3s5-1.5 5-3v-4"/><path d="M21 9v5"/>',
+ pin:'<path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2"/>',
+ chart:'<path d="M4 20h16"/><path d="M7 16V10"/><path d="M12 16V6"/><path d="M17 16v-3"/>',
+ search:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
+ check:'<path d="M5 12l5 5L20 7"/>',
+ info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
+};
+const ic=(n,s=16,cls='')=>`<svg class="ic ${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[n]||''}</svg>`;
+
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const AFFIL = JSON.parse(document.getElementById('affil').textContent||'{}'); AFFIL.terms=AFFIL.terms||[]; AFFIL.boards=AFFIL.boards||[]; AFFIL.s1_ceos=AFFIL.s1_ceos||[]; AFFIL.ceo_chain=AFFIL.ceo_chain||{};
+const nthLabel = p => p.grade_nth ? `${(p.grade_title||p.title).replace(/대표이사/,'')} ${p.grade_nth}년차${p.grade_min?'↑':''}${p.nth_year&&p.nth_year!==p.grade_nth?` (임원 ${p.nth_year}년차)`:''}` : (p.nth_year?`임원 ${p.nth_year}년차`:'');
+const afterlifeOf = pid => AFFIL.terms.filter(t=>t.s1_pid===pid);
+function afterlifeTerms(p){ if(p.active||!p.exit_date) return []; const L=afterlifeOf(p.id).filter(t=>t.appointed&&t.appointed>=p.exit_date&&(t.position==='대표이사'||t.position==='사내이사')); const m={};
+  L.forEach(t=>{const k=t.company+'|'+t.appointed; const isCEO=(AFFIL.ceo_chain[t.company]||[]).some(c=>c.name===p.name&&c.appointed===t.appointed); const pos=isCEO?'대표이사':t.position; if(!m[k]||pos==='대표이사') m[k]=Object.assign({},t,{position:pos});});
+  return Object.values(m).sort((a,b)=>a.appointed>b.appointed?1:-1); }
+const POP_SETS={}; let popSeq=0;
+function popSet(title, list){const id='ps'+(++popSeq); POP_SETS[id]={title,ids:list.map(p=>p.id)}; return id;}
+function popStats(L){
+  const n=L.length; if(n<2) return '';
+  const top=(f,k=3)=>{const c={}; L.forEach(p=>{const v=f(p); if(v)c[v]=(c[v]||0)+1}); return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,k).map(([v,m])=>`${esc(v)} ${m}`).join(' · ')};
+  const med=a=>{a=a.filter(x=>x).sort((x,y)=>x-y); return a.length?(a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2):null};
+  const act=L.filter(p=>p.active).length, vp=L.filter(p=>/부사장|사장/.test(p.title)).length, mAge=med(L.map(p=>p.appt_age));
+  const uniq=f=>new Set(L.map(f).filter(Boolean)).size>1; const tr=top(p=>p.track.replace(' 임원','').replace('(그룹 파견)',''),4), gr=uniq(p=>p.origin_group)?top(p=>p.origin_group):'', sc=uniq(p=>p.school)?top(p=>p.school):'', sec=top(p=>p.sector);
+  return `<div class="pstat"><span><b>${n}명</b> 현직 ${act} · 퇴임 ${n-act}</span><span>부사장 이상 ${vp}</span>${mAge?`<span>선임 나이 중앙값 <b>${mAge}세</b></span>`:''}${tr?`<span>구분: ${tr}</span>`:''}${gr?`<span>출신: ${gr}</span>`:''}${sec?`<span>사업부: ${sec}</span>`:''}${sc?`<span>학교: ${sc}</span>`:''}</div>`;
+}
+function showPop(anchorEl, id){
+  closePop(); const set=POP_SETS[id]; if(!set||!set.ids.length) return;
+  const L=set.ids.map(i=>BY[i]).filter(Boolean).sort((a,b)=>(a.appt||'')>(b.appt||'')?1:-1);
+  const el=document.createElement('div'); el.className='pop'; el.id='pop';
+  el.innerHTML=`<h4><span>${esc(set.title)} <small>${L.length}명</small></span><span class="x" title="닫기">×</span></h4>${popStats(L)}<table>${L.map(p=>`<tr class="${p.active?'':'dead'}"><td><a href="#/person/${encodeURIComponent(p.id)}">${esc(p.name)}</a></td><td class="num">${p.appt_year||''}</td><td class="wrap">${esc(p.post_at_appt||p.job)}</td><td>${esc(p.title)}${p.active?'':' · 퇴임 '+esc(p.exit_label)}</td></tr>`).join('')}</table>`;
+  document.body.appendChild(el);
+  const r=anchorEl.getBoundingClientRect(); let x=r.left, y=r.bottom+6; const w=el.offsetWidth,hh=el.offsetHeight;
+  if(x+w>innerWidth-12) x=innerWidth-12-w; if(y+hh>innerHeight-12) y=Math.max(12,r.top-hh-6);
+  el.style.left=x+'px'; el.style.top=y+'px';
+  el.querySelector('.x').onclick=closePop;
+}
+function closePop(){const e=document.getElementById('pop'); if(e) e.remove();}
+document.addEventListener('click',e=>{const c=e.target.closest('[data-pop]'); if(c){e.stopPropagation(); showPop(c,c.dataset.pop); return;} if(!e.target.closest('#pop')) closePop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop()});
+addEventListener('hashchange',closePop);
+const VIEW={activeOnly:(()=>{try{return localStorage.getItem('s1_activeOnly')==='1'}catch(e){return false}})(),sector:null};
+const secOf = p => (p.sector&&p.sector!=='미상')?p.sector:'전사·경영기획';
+const vis = L => L.filter(p=>(!VIEW.activeOnly||p.active)&&(!VIEW.sector||secOf(p)===VIEW.sector));
+const PEOPLE = DATA.people, BY = Object.fromEntries(PEOPLE.map(p=>[p.id,p]));
+const CO = DATA.company; const MG = PEOPLE.filter(p=>p.grp==='경영진'); const HAS_SECOM = PEOPLE.some(p=>/세콤/.test(p.grp));
+const TRACK_CHIPS = ['경영진','내부성장','그룹전입','사장'].concat(HAS_SECOM?['세콤']:[]).concat(['사외·감사','전체']);
+const INTERNAL = MG.filter(p=>p.track==='내부 성장 임원');
+const CEOS = MG.filter(p=>/^사장\(/.test(p.track)), TRANSFERS = MG.filter(p=>p.track==='그룹 전입 임원');
+const GEN=DATA.generated||new Date().toISOString().slice(0,10); const THIS_YEAR=parseInt(GEN.slice(0,4)); const NOW=THIS_YEAR+(parseInt(GEN.slice(5,7))-0.8)/12;
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const jobTxt = j=>esc(String(j??'').replace(/(위원장|의장|위원(?!회|장))(?=[가-힣])/g,'$1 · '));
+const relChip = q=>{const col=q.active?titleColor(q.title):'#8a8578'; const st=q.active?`border-color:${col};color:${col}`:`border-style:dashed;color:#8a8578`; return `<a href="#/person/${encodeURIComponent(q.id)}" style="${st}"><b style="font-weight:600">${esc(q.name)}</b> <span style="opacity:.85">${esc((q.grade_title||q.title).replace(/대표이사/,''))}${q.active?'':' †'+(q.exit_year||'')}</span></a>`};
+const fmt1 = v=>v==null?'':(Math.round(v*10)/10).toLocaleString();
+const CAT = ['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#6250d6','#008300','#8a8578'];
+const hex2rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)); const rgb2hex=a=>'#'+a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');
+const shade=(c,n)=>{ // n = 직위 연차. 1→흰색 52% 섞음, 5→원색, 7↑→15% 어둡게
+  const t=Math.max(0,Math.min(1,((n||1)-1)/6)); const [r,g,b]=hex2rgb(c);
+  if(t<0.67){const w=0.52*(1-t/0.67); return rgb2hex([r+(255-r)*w,g+(255-g)*w,b+(255-b)*w]);}
+  const d=1-0.15*((t-0.67)/0.33); return rgb2hex([r*d,g*d,b*d]); };
+const titleColor = t=>/사장|대표/.test(t)&&!/부사장/.test(t)?'#c98500':/전무/.test(t)?'#e87ba4':/부사장/.test(t)?'#2a78d6':/상무/.test(t)?'#1baf7a':'#b9b3a6';
+const grpShort = g=>({'경영진':'경영진','기타비상무이사':'기타비상무','세콤파견(사내)':'세콤(사내)','세콤파견(비상무)':'세콤(비상무)','사외이사':'사외이사','감사':'감사','내부 성장 임원':'내부','그룹 전입 임원':'그룹전입','사장(그룹 파견)':'사장(파견)','사장(내부 승진)':'사장(내부)'}[g]||g);
+const tip = $('#tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.display='block';moveTip(e)}
+function moveTip(e){const w=tip.offsetWidth,h=tip.offsetHeight;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-10;if(y+h>innerHeight-10)y=e.clientY-h-10;tip.style.left=x+'px';tip.style.top=y+'px'}
+function hideTip(){tip.style.display='none'}
+const pct = (a,b)=>b?Math.round(a/b*100):0;
+const median = a=>{const s=[...a].sort((x,y)=>x-y);const m=s.length>>1;return s.length?(s.length%2?s[m]:(s[m-1]+s[m])/2):null};
+const groupsOrdered = (()=>{const c={};INTERNAL.forEach(p=>c[p.origin_group]=(c[p.origin_group]||0)+1);return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])})();
+const groupColor = g=>{const i=groupsOrdered.indexOf(g);return i<0||i>=7?CAT[7]:CAT[i]};
+const foldGroup = g=>{const i=groupsOrdered.indexOf(g);return (i<0||i>=7)?'기타':g};
+
+// ---------- 라우터 ----------
+const routes = {timeline:viewTimeline, affil:viewAffil, people:viewPeople, person:viewPerson, origins:viewOrigins, pay:viewPay, network:viewNetwork, about:viewAbout};
+function route(){
+  const h=(location.hash.replace(/^#\/?/,'').split('?')[0])||'timeline'; const [name,arg]=h.split('/');
+  document.querySelectorAll('#tabs a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#/'+(name==='person'?'people':name)));
+  (routes[name]||viewTimeline)(decodeURIComponent(arg||'')); window.scrollTo(0,0); hideTip();
+}
+const TAB_ICON={'#/timeline':'timeline','#/people':'list','#/origins':'route','#/pay':'coins','#/affil':'building','#/network':'network','#/about':'book'};
+document.querySelectorAll('#tabs a').forEach(a=>{const n=TAB_ICON[a.getAttribute('href')]; if(n) a.insertAdjacentHTML('afterbegin',ic(n,15));});
+document.querySelector('#scope-chips [data-v=all]').insertAdjacentHTML('afterbegin',ic('users',14)); document.querySelector('#scope-chips [data-v=active]').insertAdjacentHTML('afterbegin',ic('user',14));
+addEventListener('hashchange',route);
+document.querySelectorAll('#scope-chips .chip').forEach(c=>{c.classList.toggle('on',(c.dataset.v==='active')===VIEW.activeOnly);c.onclick=()=>{VIEW.activeOnly=c.dataset.v==='active';try{localStorage.setItem('s1_activeOnly',VIEW.activeOnly?'1':'0')}catch(e){};document.querySelectorAll('#scope-chips .chip').forEach(x=>x.classList.toggle('on',x===c));route();}});
+function applyZoom(z){ document.documentElement.style.zoom=String(z); const page=Math.round(1600/z); document.documentElement.style.setProperty('--page',page+'px'); TL_W=page-84; document.querySelectorAll('#font-chips .chip').forEach(c=>c.classList.toggle('on',Number(c.dataset.z)===z)); }
+function updateCounts(){const S=L=>L.filter(p=>!VIEW.sector||secOf(p)===VIEW.sector); $('#hd-count').textContent=`임원 ${S(PEOPLE).length}명 · 내부 성장 ${S(INTERNAL).length} · 그룹 전입 ${S(TRANSFERS).length} · 사장 ${S(CEOS).length}`; $('#cnt-all').textContent=S(PEOPLE).length; $('#cnt-active').textContent=S(PEOPLE).filter(p=>p.active).length;}
+$('#hd-date').textContent=DATA.generated; $('#hd-ver').textContent='v'+APP_VERSION;
+if(CO.sector_scope){
+  const SEC_ALL=[...new Set(PEOPLE.map(secOf))].sort((a,b)=>(a==='전사·경영기획')-(b==='전사·경영기획')||a.localeCompare(b));
+  let saved=null; try{saved=localStorage.getItem('sector_'+CO.corp_code)}catch(e){}
+  VIEW.sector=SEC_ALL.includes(saved)?saved:(SEC_ALL.includes(CO.sector_default)?CO.sector_default:SEC_ALL[0]);
+  const short=s=>s.replace('부문','').replace('·경영기획','');
+  const h1=document.querySelector('.brand h1'); h1.style.display='flex'; h1.style.alignItems='center'; h1.style.gap='14px'; h1.style.flexWrap='wrap'; h1.style.rowGap='8px';
+  h1.insertAdjacentHTML('beforeend',`<span id="sector-chips" style="display:inline-flex;border:1px solid var(--ox);border-radius:6px;overflow:hidden;font:600 13px var(--sans);letter-spacing:0;white-space:nowrap">${SEC_ALL.map((s,i)=>`<span class="chip" data-s="${esc(s)}" style="border:none;border-radius:0;padding:6px 13px;${i?'border-left:1px solid var(--ox);':''}" title="${esc(s)}">${esc(short(s))} <span class="num" style="font-weight:400;opacity:.8">${PEOPLE.filter(p=>secOf(p)===s).length}</span></span>`).join('')}</span>`);
+  const paint=()=>document.querySelectorAll('#sector-chips .chip').forEach(c=>{const on=c.dataset.s===VIEW.sector; c.classList.toggle('on',on); c.style.background=on?'var(--ox)':''; c.style.color=on?'#fff':'';});
+  paint(); document.querySelectorAll('#sector-chips .chip').forEach(c=>c.onclick=()=>{VIEW.sector=c.dataset.s; try{localStorage.setItem('sector_'+CO.corp_code,VIEW.sector)}catch(e){}; paint(); updateCounts(); route();});
+}
+updateCounts();
+
+// ---------- 생애선 ----------
+let tlState={sort:'appt',filter:'경영진',status:'all',group:'all',sector:'all',x0:2010};
+const FOREIGN_RX=/Univ|College|School|Institute|Inst\.|Tech|HEC|LSE|INSEAD|\((프랑스|미국|영국|독일|중국|캐나다|호주|이탈리아|스페인|스위스|일본)\)|와세다|게이오|도쿄|니혼대|시카고|스탠|컬럼비아|콜롬비아|시러큐스|조지아대|버지니아|노스캐롤라이나|인디애나|에모리|뉴욕대|스토니|가쿠슈인|히토츠바시|츠쿠바|소카대|메이지|도쿄이과/i;
+const SECTORS=[...new Set(PEOPLE.map(p=>p.sector).filter(s=>s&&s!=='미상'))].sort(); const SECTOR_LABEL=CO.sector_label||'사업부';
+function viewTimeline(){
+  const m=$('#main');
+  m.innerHTML=`<div class="tools">
+    <div class="chips" id="f-grp">${TRACK_CHIPS.map(g=>`<span class="chip ${tlState.filter===g?'on':''}" data-v="${g}">${g}</span>`).join('')}</div>
+    <label>상태</label><select id="f-status"><option value="all">전체</option><option value="Y">재직</option><option value="N">퇴임</option></select>
+    <label>출신</label><select id="f-group"><option value="all">전체</option>${groupsOrdered.map(g=>`<option>${g}</option>`).join('')}</select>
+    <span style="${CO.sector_scope?'display:none':''}"><label>${SECTOR_LABEL}</label> <select id="f-sector"><option value="all">전체</option>${SECTORS.map(g=>`<option>${g}</option>`).join('')}</select></span>
+    <label>시작</label><select id="f-x0"><option value="2001">2001년</option><option value="2005">2005년</option><option value="2010">2010년</option><option value="2014">2014년</option></select>
+    <label>정렬</label><select id="f-sort"><option value="appt">선임일</option><option value="birth">출생연도</option><option value="group">출신 그룹</option><option value="exit">퇴임 시점</option></select>
+  </div>
+  <div class="legend"><span><i style="background:#1baf7a"></i>상무</span><span><i style="background:#2a78d6"></i>부사장${CO.title_merge_year?'('+CO.title_merge_year+'-12 이후 전무 통합)':''}</span><span><i style="background:#e87ba4"></i>전무${CO.title_merge_year?'(통합 전)':''}</span><span><i style="background:#c98500"></i>사장</span><span><i style="background:#b9b3a6"></i>이사·감사·사외</span><span><i style="background:linear-gradient(90deg,#1baf7a,#2a78d6);border:1px dashed #555"></i>점선 = 첫 공시 이전(직위 추정)</span><span>▲ 승진${CO.title_merge_year?'(통합 전) · △ 승진('+CO.title_merge_year+'-12 이후)':''}</span><span style="color:var(--ox)">◆ 퇴직금 공시</span><span><i style="background:#2f7d5b;height:5px"></i>퇴임 후 자회사 임원</span><span><b>이름 색</b> = 현 직위 · <span style="color:#8a8578">회색</span> = 퇴임 · 괄호 = 만 나이, 직위 년차</span><span>막대 색 = 직위 연차 <i style="background:linear-gradient(90deg,#b7e6d4,#1baf7a 66%,#178f65);width:44px"></i> 1년차 옅음 → 7년차↑ 짙음</span><span><i style="background:#e9c46a;border:1px solid #8a5d00;border-radius:50%;width:12px;height:12px"></i>₩ 보수 공시(억 원) · 빨간 테두리 = 퇴직소득 포함</span></div>
+  <div class="tl-wrap" id="tl"></div>`;
+  $('#f-status').value=tlState.status; $('#f-group').value=tlState.group; $('#f-sector').value=tlState.sector; $('#f-sort').value=tlState.sort; $('#f-x0').value=String(tlState.x0);
+  m.querySelectorAll('#f-grp .chip').forEach(c=>c.onclick=()=>{tlState.filter=c.dataset.v;viewTimeline()});
+  ['status','group','sector','sort','x0'].forEach(k=>$('#f-'+k).onchange=e=>{tlState[k]=k==='x0'?Number(e.target.value):e.target.value;drawTimeline()});
+  drawTimeline();
+}
+function tlPeople(){
+  let L=PEOPLE;
+  if(tlState.filter==='경영진')L=MG; else if(tlState.filter==='내부성장')L=INTERNAL; else if(tlState.filter==='그룹전입')L=TRANSFERS; else if(tlState.filter==='사장')L=CEOS; else if(tlState.filter==='세콤')L=PEOPLE.filter(p=>/세콤/.test(p.grp)); else if(tlState.filter==='사외·감사')L=PEOPLE.filter(p=>/사외|감사|비상무/.test(p.grp));
+  if(tlState.status!=='all')L=L.filter(p=>(p.active?'Y':'N')===tlState.status);
+  if(tlState.group!=='all')L=L.filter(p=>p.origin_group===tlState.group); if(tlState.sector!=='all')L=L.filter(p=>p.sector===tlState.sector);
+  const key={appt:p=>p.appt||'9999',birth:p=>p.birth_year||9999,group:p=>groupsOrdered.indexOf(p.origin_group)*10000+(p.appt_year||9999),exit:p=>(p.active?9999:p.exit_year)*10000+(p.appt_year||0)}[tlState.sort];
+  return [...L].sort((a,b)=>key(a)>key(b)?1:key(a)<key(b)?-1:0);
+}
+function dec(dateStr){if(!dateStr)return null;const [y,mo,d]=dateStr.split('-').map(Number);return y+((mo||1)-1)/12+((d||1)-1)/365}
+function drawTimeline(){
+  const tl=$('#tl'); tl.innerHTML='';
+  const sections = tlState.filter==='경영진'
+    ? [[CO.name+' 사장 히스토리',CEOS,true],['계열사 전입 임원',TRANSFERS,true],['내부 성장 임원',INTERNAL,false]]
+    : tlState.filter==='전체' ? [[CO.name+' 사장 히스토리',CEOS,true],['계열사 전입 임원',TRANSFERS,true],['내부 성장 임원',INTERNAL,false],[(HAS_SECOM?'세콤 파견 · ':'')+'사외이사 · 감사 · 기타비상무',PEOPLE.filter(p=>/세콤|사외|감사|비상무/.test(p.track)),false]]
+    : [[tlState.filter, tlPeople(), /사장|그룹전입/.test(tlState.filter)]];
+  sections.forEach(([title,list,trace])=>{
+    let L=vis(list); if(tlState.status!=='all')L=L.filter(p=>(p.active?'Y':'N')===tlState.status); if(tlState.group!=='all')L=L.filter(p=>p.origin_group===tlState.group); if(tlState.sector!=='all')L=L.filter(p=>p.sector===tlState.sector);
+    const isCEO=title.indexOf('사장')>=0;
+    const key=isCEO?(p=>p.ceo_from||p.appt||'9999'):{appt:p=>p.appt||'9999',birth:p=>p.birth_year||9999,group:p=>groupsOrdered.indexOf(p.origin_group)*10000+(p.appt_year||9999),exit:p=>(p.active?9999:p.exit_year)*10000+(p.appt_year||0)}[tlState.sort];
+    L=[...L].sort((a,b)=>key(a)>key(b)?1:key(a)<key(b)?-1:0);
+    if(!L.length)return;
+    const hd=document.createElement('div'); hd.style.cssText='padding:12px 16px 4px;font:600 15px var(--serif);border-top:1px solid var(--hair2);display:flex;gap:10px;align-items:baseline'; hd.innerHTML=`${esc(title)} <span class="note" style="margin:0">${L.length}명${trace?' · 회색 띠 = 이전 회사 재직':''}${isCEO?' · 번호 = 선임 순서':''}</span>`; tl.appendChild(hd);
+    const wrap=document.createElement('div');
+    if(isCEO&&CO.co_ceo&&new Set(L.map(p=>p.sector)).size>1){const secs=[...new Set(L.map(p=>p.sector))].sort((a,b)=>(a==='전사·경영기획')-(b==='전사·경영기획')||a.localeCompare(b)); const LS=[]; secs.forEach(sc=>L.filter(p=>p.sector===sc).forEach(p=>LS.push(p))); wrap.innerHTML=renderCEO(LS,true);}
+    else wrap.innerHTML=isCEO?renderCEO(L):renderTL(L,trace,false);
+    tl.appendChild(wrap);
+    wrap.querySelectorAll('.tl-row').forEach(g=>{const p=BY[g.dataset.id];
+      g.addEventListener('mousemove',e=>showTip(e,tipPerson(p))); g.addEventListener('mouseleave',hideTip); g.addEventListener('click',()=>location.hash='#/person/'+encodeURIComponent(p.id));});
+  });
+  const evl=document.createElement('div'); evl.className='note'; evl.style.padding='8px 16px'; evl.innerHTML=DATA.events.map((ev,i)=>`<b>${i+1}</b> ${esc(ev.label)}`).join(' &nbsp;·&nbsp; '); tl.appendChild(evl);
+}
+function renderCEO(L,grouped){
+  const X0=tlState.x0||2010,X1=THIS_YEAR+1.3; const left=200,right=36,top=50,rowH=78,HDR=24,W=TL_W,plotW=W-left-right;
+  const nHdr=grouped?new Set(L.map(p=>p.sector)).size:0; const H=top+L.length*rowH+nHdr*HDR+26; const x=v=>left+(v-X0)/(X1-X0)*plotW; let yCur=top, curSec=null, ordinal=0;
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  for(let y=X0;y<=THIS_YEAR;y++){ s+=`<rect x="${x(y+0.917)}" y="${top-8}" width="${x(y+1)-x(y+0.917)}" height="${H-top}" fill="#e9e3d4"/><line x1="${x(y)}" y1="${top-8}" x2="${x(y)}" y2="${H-20}" stroke="#ddd6c7"/><text x="${x(y)+3}" y="${top-14}" font-size="11" class="mono" fill="#6c6a63">${y}</text>`; }
+  s+=`<line x1="${x(NOW)}" y1="${top-8}" x2="${x(NOW)}" y2="${H-20}" stroke="#8c2f39" stroke-dasharray="3 3"/>`;
+  L.forEach((p,i)=>{
+    if(grouped&&p.sector!==curSec){curSec=p.sector; ordinal=0; s+=`<rect x="0" y="${yCur}" width="${W}" height="${HDR}" fill="#efeadf"/><text x="16" y="${yCur+16}" font-size="12.5" font-weight="600" fill="#8c2f39">${esc(curSec)} <tspan font-weight="400" fill="#6c6a63">${L.filter(q=>q.sector===curSec).length}명</tspan></text>`; yCur+=HDR;}
+    const y=yCur; yCur+=rowH; const ord=grouped?(++ordinal):(i+1); const a0=dec(p.appt)||p.first_report; const a=dec(p.ceo_from)||a0; const end=dec(p.ceo_to)||(p.active?NOW:(dec(p.exit_date)||(p.exit_year+1.05))); const yrs=((end-a)).toFixed(1); const toLab=p.ceo_to?p.ceo_to.slice(0,7).replace('-','.'):(p.active?'현재':p.exit_label);
+    s+=`<g class="tl-row" data-id="${p.id}"><rect class="bg" x="0" y="${y}" width="${W}" height="${rowH}" fill="transparent"/>`;
+    s+=`<line x1="${left-6}" x2="${W-right}" y1="${y+rowH-1}" y2="${y+rowH-1}" stroke="#e3ddd1"/>`;
+    s+=`<text class="name-link" x="${left-12}" y="${y+34}" font-size="13.5" text-anchor="end" font-weight="600"><tspan fill="#8c2f39" font-size="11" font-weight="500">${ord}번째</tspan> ${esc(p.name)}</text><text x="${left-12}" y="${y+50}" font-size="11" text-anchor="end" fill="#6c6a63" class="mono">${p.birth_year||''}</text>`;
+    if(end<=X0){ s+=`<text x="${left+8}" y="${y+58}" font-size="11.5" fill="#6c6a63">${esc(CO.name)} 사장 ${(p.ceo_from||p.appt||'').slice(0,7).replace('-','.')}~${toLab} · ${yrs}년 · 시작 연도(${X0}) 이전 → '시작'을 앞당기면 보임</text></g>`; return; }
+    // 윗줄: 그룹사 경력
+    if(a>a0+0.1){const xp=x(Math.max(a0,X0)); s+=`<rect x="${xp}" y="${y+48}" width="${Math.max(2,x(a)-xp)}" height="16" fill="#e9c46a" stroke="#c98500" stroke-width="1" rx="2"><title>${esc(CO.name)} 임원(사장 취임 전) ${p.appt.slice(0,7)}~${p.ceo_from.slice(0,7)}</title></rect>`; if(x(a)-xp>70) s+=`<text x="${xp+6}" y="${y+60}" font-size="10.5" fill="#5a3d00">취임 전 ${esc(p.title_hist.split(' → ')[0].split(':')[1]||'임원')}</text>`;}
+    (p.pre_segs||[]).forEach(sg=>{const x1=x(Math.max(sg.from,X0)),x2=Math.min(x(sg.to),x(a0)); if(x2<=x1)return;
+      s+=`<rect x="${x1}" y="${y+8}" width="${x2-x1}" height="9" fill="#9a9385"><title>${esc(sg.company)} ${esc(sg.title)} ${sg.from}~${sg.to-1}</title></rect>`;
+      if(x2-x1>40)s+=`<text x="${x1+3}" y="${y+6}" font-size="9.5" fill="#4a4842">${esc(sg.company)} ${esc(sg.title)}</text>`;});
+    if(!(p.pre_segs&&p.pre_segs.length)&&p.ext_career){ s+=`<text x="${x(Math.max(X0,a-3))}" y="${y+15}" font-size="9.5" fill="#6c6a63">${esc(p.ext_career.split(' / ').slice(-1)[0])} (공시 미확인)</text>`; }
+    // 아랫줄: 자사 사장 재임
+    const xa=x(Math.max(a,X0)), xe=x(end);
+    s+=`<rect x="${xa}" y="${y+48}" width="${Math.max(2,xe-xa)}" height="16" fill="#c98500" stroke="#8a5d00" stroke-width="1" rx="2"/>`;
+    for(let yy=Math.ceil(Math.max(a,X0));yy<end;yy++){ s+=`<line x1="${x(yy)}" x2="${x(yy)}" y1="${y+49}" y2="${y+63}" stroke="#faf8f3" stroke-width="1.5"/>`; }
+    if(p.active) s+=`<path d="M${xe},${y+46} l8,10 l-8,10z" fill="#c98500" stroke="#8a5d00"/>`;
+    s+=`<circle cx="${xa}" cy="${y+56}" r="4.5" fill="#17181c" stroke="#faf8f3" stroke-width="1.5"/>`;
+    const divm=(p.snaps.map(s=>s.job).join(' ').match(/([가-힣A-Za-z]+부문)(?:장| 사장| 대표)/)||[])[1]; const lab=`${CO.name}${divm?' '+divm:''} 사장 ${(p.ceo_from||p.appt)?(p.ceo_from||p.appt).slice(0,7).replace('-','.'):'?'}~${toLab} · ${yrs}년 (사장 ${p.ceo_nth||p.nth_year}년차)`;
+    const labW=lab.length*6.6; const inside=(xe-xa)>labW+20; const overflow=!inside && (xe+12+labW > W-right);
+    const tc=inside?"#fff":"#17181c"; s+= inside ? `<text x="${xa+10}" y="${y+60}" font-size="11" font-weight="600" fill="${tc}">${lab}</text>`
+       : overflow ? `<text x="${xe+8}" y="${y+76}" font-size="11" font-weight="600" fill="#17181c" text-anchor="end">${lab}</text>`
+       : `<text x="${xe+12}" y="${y+60}" font-size="11" font-weight="600" fill="#17181c">${lab}</text>`;
+    p.pay.forEach(pp=>{if(pp.year+0.5<X0)return; const sev=(p.pay_detail[pp.year]||{}).퇴직>0; const r=Math.max(5,Math.min(11,2.4+Math.sqrt(pp.total)*1.6)); const cx=x(pp.year+0.5);
+      s+=`<g><title>${pp.year}년 보수 ${pp.total}억${sev?' (퇴직소득 포함)':''} · ${esc(pp.ofcps)}</title><circle cx="${cx}" cy="${y+30}" r="${r}" fill="#e9c46a" stroke="${sev?'#8c2f39':'#8a5d00'}" stroke-width="${sev?2:1}"/><text x="${cx}" y="${y+30+r*0.42}" font-size="${Math.round(r*1.1)}" text-anchor="middle" font-weight="700" fill="#5a3d00">₩</text><text x="${cx}" y="${y+45}" font-size="9" text-anchor="middle" font-weight="600" fill="#8a5d00" paint-order="stroke" stroke="#faf8f3" stroke-width="2">${pp.total}억</text></g>`;});
+    s+=`</g>`;
+  });
+  s+=`<text x="${x(NOW)+4}" y="${H-6}" font-size="11" fill="#8c2f39">${GEN.slice(0,7)} 현재</text>`;
+  return s+`</svg>`;
+}
+const COMP_COL={};   // 전 직장 회사별 막대색(없으면 회색)
+let GRAD_SEQ=0;
+let TL_W=1516; // 고정 폭 1600 - 본문 여백 80 - 테두리. 연 칸 폭은 이 폭을 연도 수로 나눠 채움
+function renderTL(L,trace,ordinal){
+  const X0=tlState.x0||2010,X1=THIS_YEAR+1.3; const left=300,right=36,top=58,rowH=27,W=TL_W,plotW=W-left-right;
+  const AL={}; L.forEach(p=>{AL[p.id]=afterlifeTerms(p)}); const rh=p=>rowH+(AL[p.id].length?15:0);
+  const H=top+L.reduce((a,p)=>a+rh(p),0)+30; const x=v=>left+(v-X0)/(X1-X0)*plotW; let yCur=top;
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#efeadf"/><line x1="0" y1="0" x2="0" y2="6" stroke="#b9b3a6" stroke-width="1.6"/></pattern><linearGradient id="fadeL" x1="0" x2="1"><stop offset="0" stop-color="#faf8f3" stop-opacity="1"/><stop offset="1" stop-color="#faf8f3" stop-opacity="0"/></linearGradient></defs>`;
+  for(let y=X0;y<=THIS_YEAR;y++){ s+=`<rect x="${x(y+0.917)}" y="${top-8}" width="${x(y+1)-x(y+0.917)}" height="${H-top}" fill="#e9e3d4"/>`; s+=`<line x1="${x(y)}" y1="${top-8}" x2="${x(y)}" y2="${H-24}" stroke="#ddd6c7" stroke-width="1"/>`; s+=`<text x="${x(y)+3}" y="${top-14}" font-size="11" class="mono" fill="#6c6a63">${y}</text>`; }
+  s+=`<line x1="${x(NOW)}" y1="${top-8}" x2="${x(NOW)}" y2="${H-24}" stroke="#8c2f39" stroke-dasharray="3 3"/><text x="${x(NOW)+4}" y="${H-10}" font-size="11" fill="#8c2f39">${GEN.slice(0,7)} 현재</text>`;
+  const evSeen={}; DATA.events.forEach((ev,i)=>{const k=ev.year; evSeen[k]=(evSeen[k]||0)+1; const ex=x(ev.year+0.99)+(evSeen[k]-1)*16; s+=`<line x1="${ex}" y1="${top-30}" x2="${ex}" y2="${top-8}" stroke="#1f3a5f"/><circle cx="${ex}" cy="${top-32}" r="7" fill="#1f3a5f"/><text x="${ex}" y="${top-28.5}" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="600">${i+1}</text>`});
+  L.forEach((p,i)=>{
+    const y=yCur; yCur+=rh(p); const a=dec(p.appt)||(p.first_report-0.0); const end=p.active?NOW:(dec(p.exit_date)||(p.exit_year+1.05));
+    s+=`<g class="tl-row" data-id="${p.id}"><rect class="bg" x="0" y="${y}" width="${W}" height="${rh(p)}" fill="transparent"/>`;
+    { const tc=p.active?titleColor(p.title):'#8a8578'; const gt=(p.grade_title||p.title).replace(/대표이사/,'').replace(/\(.*\)/,''); const bm=parseInt((p.birth||'').slice(6,8))||6; const age=p.birth_year?(THIS_YEAR-p.birth_year-(bm>11?1:0)):null;
+      const info=p.active?`(${age!=null?'만 '+age+'세, ':''}${esc(gt)} ${p.grade_nth||p.nth_year||''}년차)`:`(${esc(gt)} · 퇴임 ${(p.exit_label||'').slice(2)})`;
+      s+=`<text class="name-link" x="${left-10}" y="${y+16}" font-size="12.5" text-anchor="end" font-weight="${p.active?'700':'500'}" fill="${tc}">${esc(p.name)} <tspan class="mono" fill="#6c6a63" font-size="10.5" font-weight="400">${p.birth_year||''}</tspan><tspan fill="${p.active?'#3d3c38':'#8a8578'}" font-size="10.5" font-weight="400"> ${info}</tspan></text>`; }
+    if(end<=X0){ s+=`<text x="${left+6}" y="${y+17}" font-size="10.5" fill="#8a8578">${p.appt?(p.appt_est?'≤':'')+p.appt.slice(2,7).replace('-','.'):'?'}~${p.exit_label} ${esc(p.title)} · 시작 연도(${X0}) 이전</text></g>`; return; }
+
+    if(trace&&p.pre_segs&&p.pre_segs.length){
+      p.pre_segs.forEach(sg=>{const x1=x(Math.max(sg.from,X0)),x2=Math.min(x(sg.to),x(a)); if(x2<=x1)return; const col=COMP_COL[sg.company]||'#8a8578';
+        s+=`<rect x="${x1}" y="${y+8}" width="${x2-x1}" height="8" fill="${col}" fill-opacity=".55"><title>${esc(sg.company)} ${sg.from}~${sg.to-1} ${esc(sg.title)}</title></rect>`;
+        if(x2-x1>46)s+=`<text x="${x1+3}" y="${y+6}" font-size="9" fill="#5a5751">${esc(CO.group_name?sg.company.replace(CO.group_name,''):sg.company)} ${esc(sg.title)}</text>`;});
+    }
+    const byYear={}; p.snaps.forEach(sn=>{if(sn.rc==='사업')byYear[sn.year]=sn.ofcps}); const lastSnap=p.snaps[p.snaps.length-1]; byYear[THIS_YEAR]=lastSnap.ofcps;
+    const firstKnown=Math.min(...Object.keys(byYear).map(Number)); let cur=null;
+    const a0=Math.max(a,X0); let gradeYears=0, prevT=null;
+    // 공시 이전 구간(선임~첫 공시 전년): 내부 성장자는 선임 시 상무. 첫 공시가 부사장이면 그 사이 승진 시점 미상 → 그라데이션
+    const firstT=byYear[firstKnown]; const unkEnd=Math.min(p.first_report, Math.floor(end)+1);
+    if(Math.floor(a)<p.first_report && !byYear[Math.floor(a)]){
+      const ux1=x(a0), ux2=Math.min(x(unkEnd),x(end)); if(ux2>ux1){
+        const startC=(/상무/.test(firstT)||p.track==='내부 성장 임원')?'#1baf7a':titleColor(firstT); const endC=titleColor(firstT);
+        const gid='gr'+(++GRAD_SEQ); s+=`<linearGradient id="${gid}" x1="0" x2="1"><stop offset="0" stop-color="${startC}"/><stop offset="1" stop-color="${endC}"/></linearGradient>`;
+        s+=`<rect x="${ux1}" y="${y+7}" width="${ux2-ux1}" height="10" fill="url(#${gid})" fill-opacity=".7" stroke="#555" stroke-width="1" stroke-dasharray="3 2"><title>${p.appt?p.appt.slice(0,4):''}~${p.first_report-1}년 · 공시 이전(직위 추정${startC!==endC?': 상무→'+esc(firstT)+' 사이':': '+esc(firstT)})</title></rect>`;
+        for(let yy=Math.ceil(a0);yy<unkEnd;yy++){ s+=`<line x1="${x(yy)}" x2="${x(yy)}" y1="${y+7}" y2="${y+17}" stroke="#faf8f3" stroke-width="1.2"/>`; }
+      }
+    }
+    for(let yy=Math.floor(a);yy<=Math.floor(end);yy++){
+      const tt=byYear[yy]||cur||byYear[firstKnown]; cur=byYear[yy]||cur;
+      gradeYears = (tt===prevT)? gradeYears+1 : 1; prevT=tt;           // 같은 직위 연차
+      if(yy<Math.floor(a0)) continue;
+      const unknown=(yy<p.first_report&&!byYear[yy]); if(unknown) continue;   // 위에서 그림
+      const x1=Math.max(x(a0),x(yy)), x2=Math.min(x(end),x(yy+1)); if(x2<=x1)continue;
+      const gap = (x2<x(end)-0.5)? 1.2 : 0;                              // 연차 구분 틈
+      s+=`<rect x="${x1}" y="${y+7}" width="${Math.max(0.5,x2-x1-gap)}" height="10" fill="${shade(titleColor(tt),gradeYears)}" rx="${yy===Math.floor(end)&&!p.active?2:0}"><title>${yy}년 · ${esc(tt)} ${gradeYears}년차</title></rect>`;
+    }
+    if(p.active) s+=`<path d="M${x(end)},${y+5} l6,7 l-6,7z" fill="${shade(titleColor(lastSnap.ofcps),gradeYears)}"/>`;
+    if(a<X0){ const x0=x(X0); s+=`<rect x="${x0}" y="${y+6}" width="34" height="12" fill="url(#fadeL)"/>`; [6,13,20].forEach(d=>s+=`<circle cx="${x0+d}" cy="${y+12}" r="1.7" fill="#17181c"/>`); }
+    if(a>=X0) s+=`<circle cx="${x(a)}" cy="${y+12}" r="4.2" fill="#17181c" stroke="#faf8f3" stroke-width="1.5"/>`;
+    { // 시작점 라벨: 선임 연월 · 직위 · 년차(재직) / 퇴임 연월(퇴임)
+      const firstTitle=(p.snaps.find(sn=>sn.rc==='사업')||p.snaps[0]).ofcps; const t0=(p.track==='내부 성장 임원'&&!/(^|[^부])사장|대표/.test(firstTitle))?'상무':firstTitle.replace(/대표이사/,'대표이사 ');
+      const lab=`${p.appt?(p.appt_est?'≤':'')+p.appt.slice(2,7).replace('-','.'):'선임일 미공시·'+p.first_report+' 보고서부터'} ${t0}${p.appt?(p.appt_est?' 재임 확인':' 선임'):''}${a<X0?'('+X0+' 이전부터 이어짐)':''}`+(p.active?` · ${nthLabel(p)}`:` → ${(p.exit_label||'').slice(2)} 퇴임(${nthLabel(p)})`);
+      const lx=x(Math.max(a,X0))+(a>=X0?6:40); const anchor=(lx+lab.length*5.6>W-right)?'end':'start'; const tx=anchor==='end'?x(Math.max(a,X0))-6:lx;
+      s+=`<text x="${tx}" y="${y+5.5}" font-size="9" fill="${p.active?'#17181c':'#6c6a63'}" text-anchor="${anchor}" paint-order="stroke" stroke="#faf8f3" stroke-width="2.5">${esc(lab)}</text>`;
+    }
+    p.pay.forEach(pp=>{if(pp.year+0.5<X0)return; const sev=(p.pay_detail[pp.year]||{}).퇴직>0; const r=Math.max(5,Math.min(11,2.4+Math.sqrt(pp.total)*1.6)); const cx=x(pp.year+0.5);
+      s+=`<g><title>${pp.year}년 보수 ${pp.total}억${sev?' (퇴직소득 포함)':''} · ${esc(pp.ofcps)}</title><circle cx="${cx}" cy="${y+12}" r="${r}" fill="#e9c46a" stroke="${sev?'#8c2f39':'#8a5d00'}" stroke-width="${sev?2:1}"/><text x="${cx}" y="${y+12+r*0.42}" font-size="${Math.round(r*1.1)}" text-anchor="middle" font-weight="700" fill="#5a3d00">₩</text>${r>=7?`<text x="${cx}" y="${y+26}" font-size="8.5" text-anchor="middle" font-weight="600" fill="#8a5d00" paint-order="stroke" stroke="#faf8f3" stroke-width="2">${pp.total}억</text>`:''}</g>`;});
+    (p.promos||[]).filter(pr=>pr.up).forEach(pr=>{const cx=x(pr.hr_year+0.95); const hollow=/통합후/.test(pr.regime)&&/부사장/.test(pr.to)&&/상무/.test(pr.from); s+=`<path d="M${cx},${y+2} l5,7 l-10,0z" fill="${hollow?'#faf8f3':'#17181c'}" stroke="#17181c" stroke-width="1.2"><title>${pr.hr_year}년 12월 인사 ${pr.from}→${pr.to}${hollow?' (전무 통합 이후: 구 전무 승진일 수 있음)':''}</title></path>`});
+    p.severance_years.forEach(sy=>{const cx=x(sy+0.5); s+=`<path d="M${cx},${y+4} l6,8 l-6,8 l-6,-8z" fill="#8c2f39" stroke="#faf8f3" stroke-width="1"/>`});
+    AL[p.id].forEach(t=>{const x1=Math.max(x(dec(t.appointed)),x(X0)),x2=t.ended?x(dec(t.ended)):x(NOW); if(x2<=x1)return;
+      const short=t.company; const lab=`${short} ${t.position} ${t.appointed.slice(2,7).replace('-','.')}~${t.ended?t.ended.slice(2,7).replace('-','.'):'현재'}`;
+      s+=`<rect x="${x1}" y="${y+22}" width="${x2-x1}" height="5" fill="#2f7d5b" rx="1"><title>퇴임 후 · ${esc(t.company)} ${esc(t.position)} ${t.appointed}~${t.ended||'현재'}</title></rect>`;
+      if(!t.ended) s+=`<path d="M${x2},${y+21} l5,3.5 l-5,3.5z" fill="#2f7d5b"/>`;
+      s+=`<text x="${x1}" y="${y+36}" font-size="10" font-weight="600" fill="#2f7d5b">${esc(lab)}</text>`;});
+    s+=`</g>`;
+  });
+  return s+`</svg>`;
+}
+function tipPerson(p){
+  const pay=p.pay.length?`<div class="m">보수 공시 ${p.pay.map(x=>x.year+' '+x.total+'억').join(', ')}</div>`:'';
+  return `<b>${esc(p.name)}</b> <span class="m">${p.birth} · ${esc(p.track)}</span><br>${esc(p.title)} · ${esc(p.job)}<br><span class="m">선임</span> ${p.appt||'?'} (${p.appt_age||'?'}세) · <span class="m">${p.active?'재직':'퇴임 '+p.exit_label}</span> · ${p.tenure_years||'?'}년 · ${nthLabel(p)}${p.active?'':'에 퇴임'}<br><span class="m">경로</span> ${p.track==='내부 성장 임원'?[p.post_before,p.post_at_appt].filter((v,i,a)=>v&&a.indexOf(v)===i).map(esc).join(' → ')+' → 임원 <span class="m">[출신 '+esc(p.origin_group)+']</span>':(p.origin_note?esc(p.origin_note):esc(p.track))}<br><span class="m">학교</span> ${esc(p.school||'-')} ${esc(p.major||'')} ${p.degree||''}${p.mba?' · MBA':''}${pay}`;
+}
+
+// ---------- 명부 ----------
+let ppState={q:'',grp:'all',sort:'appt',dir:1};
+function viewPeople(){
+  const m=$('#main');
+  m.innerHTML=`<div class="tools"><input type="search" id="pq" placeholder="이름·학교·보직·담당 검색" value="${esc(ppState.q)}" style="min-width:260px"><label>구분</label><select id="pg"><option value="all">전체</option>${[...new Set(PEOPLE.map(p=>p.track))].map(g=>`<option ${ppState.grp===g?'selected':''}>${g}</option>`).join('')}</select><span class="note" id="pcount"></span></div>
+  <div class="scroll"><table class="t" id="pt"><thead><tr>${[['name','이름'],['birth_year','출생'],['track','구분'],['title','현직위'],['job','현담당'],['appt','선임일'],['appt_age','선임나이'],['status','상태'],['exit_year','퇴임'],['tenure_years','재임'],['grade_nth','년차(현 직위)'],['origin_group','출신 그룹'],['post_at_appt','선임시 보직'],['sector',SECTOR_LABEL],['school','학교'],['major','학과'],['grad_year','졸업'],['degree','학위'],['mba','MBA'],['region','지역'],['group_affil',(CO.group_name||'그룹')+' 계열'],['payn','보수공시']].map(([k,l])=>`<th data-k="${k}" class="${ppState.sort===k?'sorted':''}">${l}</th>`).join('')}</tr></thead><tbody></tbody></table></div>`;
+  $('#pq').oninput=e=>{ppState.q=e.target.value;fillPeople()}; $('#pg').onchange=e=>{ppState.grp=e.target.value;fillPeople()};
+  m.querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(ppState.sort===k)ppState.dir*=-1;else{ppState.sort=k;ppState.dir=1}m.querySelectorAll('th').forEach(t=>t.classList.toggle('sorted',t.dataset.k===k));fillPeople()});
+  fillPeople();
+}
+function fillPeople(){
+  const q=ppState.q.trim().toLowerCase();
+  let L=vis(PEOPLE).filter(p=>(ppState.grp==='all'||p.track===ppState.grp)&&(!q||[p.name,p.school,p.major,p.job,p.post_at_appt,p.post_before,p.title_hist,p.job_hist,p.origin_group,p.sector].join(' ').toLowerCase().includes(q)));
+  const val=p=>({status:p.active?0:1,payn:p.pay.length,mba:p.mba?1:0,group_affil:p.group_affil?1:0}[ppState.sort]??p[ppState.sort]??'');
+  L.sort((a,b)=>{const x=val(a),y=val(b);return (x>y?1:x<y?-1:0)*ppState.dir});
+  $('#pcount').textContent=`${L.length}명`;
+  $('#pt tbody').innerHTML=L.map(p=>`<tr><td><a href="#/person/${encodeURIComponent(p.id)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(p.name)}</a></td><td class="n">${p.birth_year||''}</td><td>${esc(p.track)}</td><td>${esc(p.title)}</td><td class="wrap2">${jobTxt(p.job)}</td><td class="n">${p.appt||''}</td><td class="n">${p.appt_age||''}</td><td>${p.active?'재직':'<span style="color:var(--ox)">퇴임</span>'}</td><td class="n">${p.active?'':p.exit_label}</td><td class="n">${p.tenure_years??''}</td><td>${nthLabel(p)}</td><td><span class="tag" style="border-color:${groupColor(p.origin_group)}">${esc(p.origin_group)}</span></td><td class="wrap2">${esc(p.post_at_appt)}</td><td>${esc(p.sector)}</td><td>${esc(p.school)}</td><td>${esc(p.major)}</td><td class="n">${p.grad_year||''}</td><td>${esc(p.degree)}</td><td>${p.mba?'MBA':''}</td><td>${esc(p.region)}</td><td>${p.group_affil?'Y':''}</td><td class="n">${p.pay.length?p.pay.length+'회':''}</td></tr>`).join('');
+}
+
+// ---------- 개인 도감 ----------
+function viewPerson(id){
+  const p=BY[id]; const m=$('#main'); if(!p){m.innerHTML='<p>해당 인물이 없습니다.</p>';return}
+  const keyOf=o=>o.school+' '+o.degree; const myEnt=(p.schools||[]).filter(o=>o.degree!=='고졸'); const mySch=myEnt.map(keyOf);
+  const SPAN={'학사':3,'전문학사':1,'석사':1,'MBA':1,'박사':3,'수료':1,'중퇴':3};
+  const shared=q=>myEnt.flatMap(o=>(q.schools||[]).filter(x=>x.school===o.school&&x.degree===o.degree).map(x=>({label:keyOf(o),same:!!(o.year&&x.year&&Math.abs(o.year-x.year)<=(SPAN[o.degree]??2)),y:x.year})));
+  const alumni=PEOPLE.filter(q=>q.id!==p.id&&shared(q).length);
+  const cohort=PEOPLE.filter(q=>q.id!==p.id&&q.appt_year===p.appt_year&&q.track===p.track);
+  const succ=DATA.edges.filter(e=>e.type==='보직계승'&&(e.a===p.id||e.b===p.id));
+  const sameGroup=PEOPLE.filter(q=>q.id!==p.id&&q.origin_group===p.origin_group);
+  const normPost=t=>String(t||'').replace(/\s+/g,'').replace(new RegExp('^'+CO.name),''); const GENERIC=/^(-|전사총괄|사외이사|사외이사.*|감사|이사|사장|대표이사.*|경영전반총괄.*|고문|자문역|미기재|.*위원회.*)$/;
+  const span=q=>[q.appt_year||q.first_report, q.active?THIS_YEAR:(q.exit_year||q.last_report)]; const ov=q=>{const a=span(p),b=span(q); return Math.min(a[1],b[1])-Math.max(a[0],b[0])}; const byEra=(a,b)=>(b.active-a.active)||(ov(b)-ov(a));
+  const myPosts=[...new Set(p.snaps.filter(s=>s.rc==='사업').map(s=>normPost(s.job)).filter(x=>x&&!GENERIC.test(x)))];
+  const postMates=myPosts.map(post=>({post, who:PEOPLE.filter(q=>q.id!==p.id&&q.snaps.some(s=>normPost(s.job)===post)).map(q=>{const ys=q.snaps.filter(s=>normPost(s.job)===post).map(s=>s.year); return {q, y0:Math.min(...ys), y1:Math.max(...ys)}}).sort((a,b)=>a.y0-b.y0)})).filter(x=>x.who.length);
+  const yr=(a,b)=>a===b?`’${String(a).slice(2)}`:`’${String(a).slice(2)}~${String(b).slice(2)}`;
+  const capList=(L,render)=>{const S=[...L].sort(byEra); return S.slice(0,12).map(render).join('')+(S.length>12?`<span class="note"> 외 ${S.length-12}명</span>`:'')};
+  const schPop=k=>popSet(k+' 동문(같은 과정)', PEOPLE.filter(q=>(q.schools||[]).some(o=>keyOf(o)===k))); const schoolPop=mySch.length?schPop(mySch[0]):null; const groupPop=popSet('출신 '+p.origin_group, PEOPLE.filter(q=>q.origin_group===p.origin_group));
+  const payYears=Object.keys(p.pay_detail);
+  let prev=null;
+  const maxAnn=Math.max(...p.snaps.filter(s=>s.rc==='사업').map(s=>s.year),0); const snapRows=p.snaps.filter(sn=>sn.rc==='사업'||sn.year>maxAnn).map(sn=>{const chg=k=>prev&&prev[k]!==sn[k]?'changed':''; const pay=p.pay.find(x=>x.year===sn.year&&sn.rc==='사업'); const d=p.pay_detail[sn.year];
+    const r=`<tr><td class="n">${sn.year} <span style="color:var(--mute)">${sn.rc}</span></td><td class="${chg('ofcps')}">${esc(sn.ofcps)}</td><td class="wrap2 ${chg('job')}">${jobTxt(sn.job)}</td><td class="${chg('reg')}">${esc(sn.reg)}</td><td class="n ${chg('hffc')}">${esc(sn.hffc)}</td><td class="n ${chg('tenure_end')}">${esc(sn.tenure_end)}</td><td class="n">${pay?pay.total+'억':''}${d&&d.퇴직?` <span style="color:var(--ox)">퇴직 ${(d.퇴직/100).toFixed(1)}억</span>`:''}</td><td class="wrap" style="font-size:12px;color:var(--ink2)">${sn.rc==='사업'&&prev&&prev.career===sn.career?'<span style="color:var(--mute)">(전년과 동일)</span>':esc(sn.career).slice(0,400)}</td></tr>`; prev=sn; return r;}).join('');
+  const careerRail=p.career.map(it=>{const isAppt=p.appt_year&&it.y===p.appt_year&&!it.edu; const age=(it.y&&p.birth_year)?it.y-p.birth_year:null; return `<div class="it ${it.edu?'edu':''} ${isAppt?'appt':''}"><span class="y">${it.y||''}${age!=null?`<i>${age}세</i>`:''}</span><div class="t">${esc(it.t)}${isAppt?'<small style="color:var(--ox)">← 임원 선임 연도</small>':''}</div></div>`}).join('');
+  const payPanel=payYears.length?`<div class="panel"><h2>${ic('cash')}보수 상세 <small>사업보고서 '개인별 보수지급금액' 산정기준표 · 단위 백만원</small></h2>${paySvg(p)}<table class="t" style="margin-top:8px"><tr><th>연도</th><th>직위표기</th><th>급여</th><th>상여</th><th>기타근로</th><th>퇴직소득</th><th>총액</th><th>임원근무</th><th>지급배수</th><th>퇴직기준급여(월)</th></tr>${payYears.map(y=>{const d=p.pay_detail[y];return `<tr><td class="n">${y}</td><td>${esc(d.직위표기)}</td><td class="n">${d.급여}</td><td class="n">${d.상여}</td><td class="n">${d.기타근로}</td><td class="n" style="color:var(--ox)">${d.퇴직||''}</td><td class="n"><b>${d.총액}</b></td><td class="n">${d.임원근무년수?d.임원근무년수+'년':''}</td><td class="n">${d.지급배수||''}</td><td class="n">${d.퇴직기준급여||''}</td></tr>`}).join('')}</table>
+  ${payYears.map(y=>{const d=p.pay_detail[y];return d.퇴직산정?`<details class="src" style="margin-top:8px"><summary>${y}년 산정기준 원문</summary><pre class="raw">급여: ${esc(d.급여산정)}\n상여: ${esc(d.상여산정)}\n퇴직: ${esc(d.퇴직산정)}</pre></details>`:''}).join('')}</div>`:(p.pay.length?`<div class="panel"><h2>보수 <small>총액만 공시(세부표 미파싱 연도)</small></h2>${p.pay.map(x=>`<div>${x.year} · ${esc(x.ofcps)} · <b class="num">${x.total}억</b> <span class="note">(${x.src})</span></div>`).join('')}</div>`:'');
+  m.innerHTML=`<div class="person-head"><div style="flex:1 1 420px"><h1>${esc(p.name)}</h1><div class="meta">${p.birth} 생 · ${p.sex} · <b>${esc(p.track)}</b> · ${esc(p.reg)} · ${esc(p.title)} · ${jobTxt(p.job)}</div>
+    <div class="badges"><span class="badge ${p.active?'navy':'ox'}">${ic(p.active?'user':'userOff',13)}${p.active?'재직 중':'퇴임 '+p.exit_label+' ('+p.exit_year+'년 인사)'}</span>${p.track==='내부 성장 임원'?`<span class="badge">${[p.post_before,p.post_at_appt].filter((v,i,a)=>v&&a.indexOf(v)===i).map(esc).join(' → ')} → 임원 · 출신 ${esc(p.origin_group)}</span>`:(p.origin_note?`<span class="badge">${esc(p.origin_note)}</span>`:'')}<span class="badge">${esc(p.sector)}</span>${(p.schools||[]).map((o,i)=>`<span class="badge ${o.degree==='고졸'?'':'clk'}" ${o.degree==='고졸'?'':`data-pop="${schPop(keyOf(o))}"`} style="cursor:pointer" title="같은 학교·같은 과정 명단">${ic('school',13)}${esc(o.school)} ${i===0&&p.major?esc(p.major)+' ':''}${esc(o.degree)}${o.year?` <span class="num" style="color:var(--mute)">${o.year}</span>`:''}</span>`).join('')}${p.mba?'<span class="badge">MBA</span>':''}${p.group_affil?'<span class="badge">'+esc(CO.group_name||'그룹')+' 계열사 출신</span>':''}${p.region?`<span class="badge">${ic('pin',13)}${esc(p.region)}</span>`:''}</div></div>
+    <div class="facts" style="flex:1 1 520px;margin:0;border-top:none"><div class="fact">${ic('calendar',16)}<b style="font-size:20px;white-space:nowrap">${p.appt_est?'≤ ':''}${p.appt||'?'}</b><span>${p.appt_est?'임원 선임일(첫 공시 기준, 그 전일 수 있음)':'임원 선임일'}</span></div><div class="fact">${ic('cake',16)}<b>${p.appt_age||'?'}<i>세</i></b><span>선임 시 나이</span></div><div class="fact">${ic('clock',16)}<b>${p.tenure_years??'?'}<i>년</i></b><span>${p.active?'임원 재임(진행)':'임원 재임'}</span></div><div class="fact">${ic('flag',16)}<b>${p.grade_nth??'?'}<i>년차</i></b><span>${esc((p.grade_title||p.title).replace(/대표이사/,''))} 기준${p.active?' ('+THIS_YEAR+')':' (퇴임 당시)'} · 임원 ${p.nth_year??'?'}년차</span></div><div class="fact">${ic('exit',16)}<b style="font-size:20px">${p.active?'—':p.exit_label}</b><span>퇴임(정식 임원 종료)</span></div><div class="fact">${ic('cash',16)}<b>${p.pay.length?Math.max(...p.pay.map(x=>x.total))+'<i>억</i>':'—'}</b><span>최대 연간 보수 공시</span></div></div></div>
+  <div class="row">
+    <div class="panel" style="flex:2 1 560px"><h2>${ic('calendar')}연도별 공시 변화 <small>전년 대비 바뀐 칸 = 노랑</small></h2><div class="scroll" style="max-height:420px"><table class="t"><thead><tr><th>보고서</th><th>직위</th><th>담당업무</th><th>등기</th><th>재직기간</th><th>임기만료</th><th>보수</th><th>주요경력(공시 원문)</th></tr></thead><tbody>${snapRows}</tbody></table></div>
+    <p class="note">퇴임 판정: ${esc(p.exit_basis||'재직 중')}</p></div>
+    <div class="panel" style="flex:1 1 320px"><h2>${ic('route')}경력 궤적 <small>연도 옆 = 만 나이</small></h2><div class="rail">${careerRail}</div>${p.ext_career?`<p class="note">외부 경력: ${esc(p.ext_career)}</p>`:''}</div>
+  </div>
+  <div class="row">
+    ${payPanel}
+    ${(()=>{const al=afterlifeOf(p.id).slice().sort((a,b)=>(a.appointed||'')>(b.appointed||'')?1:-1); if(!al.length) return '';
+      const phase=t=>(!p.exit_date||(t.appointed||'')<p.exit_date)?'재직 중 겸직':'퇴임 후';
+      const post=al.filter(t=>phase(t)==='퇴임 후'); const first=post[0];
+      const gap=first&&first.appointed&&p.exit_date?((parseInt(first.appointed.slice(0,4))+(parseInt(first.appointed.slice(5,7))-1)/12)-(parseInt(p.exit_date.slice(0,4))+(parseInt(p.exit_date.slice(5,7))-1)/12)).toFixed(1):null;
+      return `<div class="panel" style="flex:2 1 620px"><h2>${ic('building')}자회사 임원 이력 <small>시간순 · 재직 중 겸직 / 퇴임 후 구분</small></h2><div class="scroll" style="max-height:none;border:none"><table class="t"><tr><th>시점</th><th>회사</th><th>직위</th><th>선임</th><th>종료</th><th>임기만료</th><th>공시상 경력</th></tr>${al.map(t=>{const ph=phase(t);return `<tr><td>${ph==='퇴임 후'?'<b style="color:var(--ox)">퇴임 후</b>':'<span style="color:var(--mute)">재직 중 겸직</span>'}</td><td><b>${esc(t.company)}</b></td><td>${esc(t.position)}</td><td class="n">${t.appointed||''}</td><td class="n">${t.ended||'재임 중'}</td><td class="n">${t.term_end||''}</td><td class="wrap2">${esc(t.prior)}</td></tr>`}).join('')}</table></div>${p.exit_date?`<p class="note">${CO.name} 퇴임 ${p.exit_label}${first?` → ${esc(first.company)} ${esc(first.position)} 선임 ${first.appointed} (${gap}년 뒤)`:' → 퇴임 후 자회사 임원 선임 없음(공시 기준)'}.</p>`:''}</div>`})()}
+    <div class="panel"><h2>${ic('network')}관계</h2>
+      <div class="kv"><dt>동문 <span class="note" style="margin:0;font-size:11px">같은 학교·같은 과정 · ≈ 재학 시기 겹침</span><br>${mySch.length?mySch.map(s=>`<span class="chip" style="padding:1px 8px;font-size:11.5px" data-pop="${schPop(s)}" title="같은 학교·같은 과정 명단">${esc(s)}</span>`).join(' '):'(-)'}</dt><dd class="rel">${alumni.length?capList(alumni,q=>{const sh=shared(q); const same=sh.some(x=>x.same); return relChip(q).replace('</a>',` <span style="color:var(--mute)">${mySch.length>1?esc([...new Set(sh.map(x=>x.label))].join('·')):''}${sh[0].y?' ’'+String(sh[0].y).slice(2):''}${same?' <b style="color:var(--ox)">≈</b>':''}</span></a>`)}):'<span class="note">없음</span>'}</dd>
+      <dt>선임 동기 (${p.appt_year||'?'}년) <span class="note" style="margin:0;font-size:11px">색 = 현 직위 · †= 퇴임</span></dt><dd class="rel">${cohort.length?cohort.map(relChip).join(''):'<span class="note">없음</span>'}</dd>
+      <dt>보직 계승</dt><dd class="rel">${succ.length?succ.map(e=>{const o=BY[e.a===p.id?e.b:e.a];return relChip(o).replace('</a>',` <span style="color:var(--mute)">${esc(e.label)}</span></a>`)}).join(''):'<span class="note">없음</span>'}</dd>
+      <dt>같은 자리 거친 사람 <span class="note" style="margin:0;font-size:11px">보직별 · 연도</span></dt><dd class="rel">${postMates.length?postMates.map(x=>`<div style="margin:1px 0 4px"><span class="tag" style="display:inline-block;font-size:11px;padding:1px 6px;border:1px solid var(--hair2);border-radius:3px;margin-right:6px;background:var(--panel2)">${esc(x.post)}</span>${x.who.slice(0,10).map(w=>relChip(w.q).replace('</a>',` <span style="color:var(--mute)">${yr(w.y0,w.y1)}</span></a>`)).join('')}${x.who.length>10?`<span class="note"> 외 ${x.who.length-10}명</span>`:''}</div>`).join(''):'<span class="note">없음(이 보직을 거친 다른 임원 없음)</span>'}</dd>
+      <dt>출신 그룹</dt><dd class="rel"><span class="chip" style="padding:1px 8px;font-size:11.5px" data-pop="${groupPop}" title="그룹 통계·전체 명단">${esc(p.origin_group)} · ${sameGroup.length+1}명</span></dd></div>
+    </div>
+  </div>
+  ${(p.pre_trace&&p.pre_trace.length)?`<div class="panel" style="margin-top:14px"><h2>${ic('building')}${CO.name} 이전 회사 공시 흔적 <small>전 직장 사업보고서 임원현황에서 이름+출생연월이 일치하는 행</small></h2><table class="t"><tr><th>보고서</th><th>회사</th><th>직위</th><th>담당</th><th>비고</th><th>공시 행 원문</th></tr>${p.pre_trace.map(r=>`<tr><td class="n">${r.year}</td><td>${esc(r.company)}</td><td><b>${esc(r.title)}</b></td><td>${esc(r.job)}</td><td style="color:var(--ox)">${esc(r.note)}</td><td class="wrap" style="font-size:12px;color:var(--ink2)">${esc(r.raw)}</td></tr>`).join('')}</table><p class="note">보고서 연도는 그 해 12/31 기준. '의원면직·관계사 전출·임원사임'은 해당 회사 변동표의 기재다.</p></div>`:(p.group_affil||/^사장\(/.test(p.track))?`<div class="panel" style="margin-top:14px"><h2>${CO.name} 이전 회사 공시 흔적</h2><p class="note">조회한 계열사 공시에서 찾지 못함(2014년 이전 재직, 비임원 직급, 또는 해당 회사가 정기공시 대상이 아님).</p></div>`:''}
+  <div class="panel" style="margin-top:14px"><h2>${ic('arrowUp')}직위 승진 이력 <small>사업보고서 직위가 바뀐 시점. 인사 연도 = 보고서 연도 − 1 (12월 인사)</small></h2>${(p.promos&&p.promos.length)?`<table class="t"><tr><th>인사 시점</th><th>보고서</th><th>직위 변화</th><th>제도</th><th>해석</th></tr>${p.promos.map(pr=>`<tr><td class="n">${pr.hr_year}년 12월</td><td class="n">${pr.year}</td><td>${esc(pr.from)} → <b>${esc(pr.to)}</b></td><td>${esc(pr.regime)}</td><td class="wrap" style="color:var(--ink2)">${esc(pr.note)}</td></tr>`).join('')}</table>`:'<p class="note">보고서상 직위 변동 없음</p>'}<p class="note">${p.jm_trace?`경력 문구에 '전무' 흔적: ${p.jm_hits.map(esc).join(' / ')}`:'경력 문구에 전무 언급 없음. '}${p.first_report>2021||p.appt_year<2021?' 2021년 보고서 이전 미등기 구간의 전무 승진 여부는 공시로 확인 불가.':''}</p></div>
+  <details class="src" style="margin-top:14px"><summary>공시 원문 전체(주요경력)</summary><pre class="raw">${esc(p.career_text)}</pre></details>
+  <p class="note"><a href="#/timeline">← 생애선</a> · <a href="#/people">명부</a></p>`;
+}
+function paySvg(p){
+  const ys=Object.keys(p.pay_detail); const W=520,H=160,L=40,B=26,T=22; const max=Math.max(...ys.map(y=>p.pay_detail[y].총액)); const bw=Math.min(54,(W-L-20)/ys.length-10);
+  const sy=v=>T+(H-T-B)*(1-v/max);
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  [0,0.5,1].forEach(f=>{s+=`<line x1="${L}" x2="${W-10}" y1="${sy(max*f)}" y2="${sy(max*f)}" stroke="#ddd6c7"/><text x="${L-4}" y="${sy(max*f)+4}" font-size="10" text-anchor="end" class="mono" fill="#6c6a63">${Math.round(max*f/100*10)/10}억</text>`});
+  ys.forEach((y,i)=>{const d=p.pay_detail[y]; const x=L+12+i*((W-L-20)/ys.length); let acc=0;
+    [['급여','#15406f'],['상여','#3f7bc8'],['기타근로','#9fbfe6'],['퇴직','#8c2f39']].forEach(([k,c])=>{const v=d[k]||0;if(!v)return;const y1=sy(acc+v),y2=sy(acc);s+=`<rect x="${x}" y="${y1}" width="${bw}" height="${Math.max(0,y2-y1-1)}" fill="${c}"/>`;acc+=v});
+    s+=`<text x="${x+bw/2}" y="${H-10}" font-size="11" text-anchor="middle" class="mono">${y}</text><text x="${x+bw/2}" y="${sy(d.총액)-4}" font-size="10.5" text-anchor="middle" class="mono">${(d.총액/100).toFixed(1)}</text>`});
+  s+=`</svg><div class="legend"><span><i style="background:#15406f"></i>급여</span><span><i style="background:#3f7bc8"></i>상여</span><span><i style="background:#9fbfe6"></i>기타근로</span><span><i style="background:#8c2f39"></i>퇴직소득</span></div>`;
+  return s;
+}
+
+// ---------- 출신·스펙 ----------
+function viewOrigins(){
+  const m=$('#main'); const L=vis(INTERNAL).filter(p=>p.appt_year); const M=vis(MG);
+  const y0=Math.max(2000,Math.min(...L.map(p=>p.appt_year))); const yk=p=>Math.max(y0,p.appt_year); const yrs=[]; for(let y=y0;y<=THIS_YEAR-1;y++)yrs.push(y); const ylab=y=>String(y);
+  const gsum={}; L.forEach(p=>{const g=p.origin_group; gsum[g]=gsum[g]||{n:0,ages:[],vp:0,exit:0,active:0,names:[],sectors:{}}; const s=gsum[g]; s.n++; if(p.appt_age)s.ages.push(p.appt_age); if(/부사장/.test(p.title_hist)&&/상무/.test(p.title_hist))s.vp++; if(!p.active)s.exit++; else s.active++; s.names.push(p); s.sectors[p.sector]=(s.sectors[p.sector]||0)+1;});
+  const recent=L.filter(p=>p.appt_year>=THIS_YEAR-5), recentN=recent.length;
+  const cnt=(arr,f)=>{const c={};arr.forEach(p=>{const k=f(p);c[k]=(c[k]||0)+1});return Object.entries(c).sort((a,b)=>b[1]-a[1])};
+  const barList=(pairs,total,who)=>{const mx=Math.max(...pairs.map(x=>x[1]));return `<div class="bars">${pairs.map(([k,v])=>{const pop=who?` data-pop="${popSet(String(k),who(k))}"`:'';return `<div class="bar ${who?'clk':''}"${pop}><span>${esc(k)}</span><div class="b" style="width:${pct(v,mx)}%"></div><span class="v">${v} <span style="color:var(--mute)">${pct(v,total)}%</span></span></div>`}).join('')}</div>`};
+  // 스택 막대 (연도 × 그룹)
+  const G=groupsOrdered.slice(0,7).concat(['기타']); const W=1100,H=230,Lp=36,B=28,T=12; const maxN=Math.max(...yrs.map(y=>L.filter(p=>yk(p)===y).length)); const bw=(W-Lp-20)/yrs.length; const sy=v=>T+(H-T-B)*(1-v/maxN);
+  let svg=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`; const step=maxN>24?5:maxN>12?2:1; for(let v=0;v<=maxN;v+=step)svg+=`<line x1="${Lp}" x2="${W-10}" y1="${sy(v)}" y2="${sy(v)}" stroke="#e4ded0"/><text x="${Lp-5}" y="${sy(v)+4}" font-size="10" text-anchor="end" class="mono" fill="#6c6a63">${v}</text>`;
+  yrs.forEach((y,i)=>{const x=Lp+10+i*bw; let acc=0; G.forEach(g=>{const n=L.filter(p=>yk(p)===y&&foldGroup(p.origin_group)===g).length; if(!n)return; const y1=sy(acc+n),y2=sy(acc); svg+=`<rect class="clk" data-pop="${popSet(ylab(y)+'년 선임 · '+g, L.filter(p=>yk(p)===y&&foldGroup(p.origin_group)===g))}" x="${x}" y="${y1}" width="${bw-14}" height="${Math.max(0,y2-y1-2)}" fill="${g==='기타'?CAT[7]:groupColor(g)}" rx="1"><title>${ylab(y)} ${g} ${n}명 (클릭=명단)</title></rect>`; if(bw>30&&y2-y1>12)svg+=`<text x="${x+(bw-14)/2}" y="${(y1+y2)/2+4}" font-size="10" text-anchor="middle" fill="#fff" font-weight="600">${n}</text>`; acc+=n}); svg+=`<text x="${x+(bw-14)/2}" y="${H-10}" font-size="11.5" text-anchor="middle" class="mono">${ylab(y)}</text>`});
+  svg+=`</svg><div class="legend">${G.map(g=>`<span><i style="background:${g==='기타'?CAT[7]:groupColor(g)}"></i>${esc(g)}</span>`).join('')}</div>`;
+  // 나이 히스토그램
+  const ages=cnt(L.filter(p=>p.appt_year>=THIS_YEAR-9),p=>p.appt_age).sort((a,b)=>a[0]-b[0]);
+  const sectors=[...new Set(L.map(p=>p.sector))];
+  const cellPop=(title,list)=>list.length?`class="n clk ${list.length>=3?'hot2':'hot'}" data-pop="${popSet(title,list)}"`:'class="n"';
+  const matrix=`<table class="t matrix"><tr><th>출신 그룹 \\ ${SECTOR_LABEL}</th>${sectors.map(s=>`<th>${esc(s)}</th>`).join('')}<th>계</th><th>선임나이 중앙값</th><th>부사장 승진</th><th>퇴임</th><th>재직</th></tr>${groupsOrdered.filter(g=>gsum[g]).map(g=>{const s=gsum[g];const inG=s.names;return `<tr><td><span class="tag" style="border-color:${groupColor(g)}">${esc(g)}</span></td>${sectors.map(sec=>{const ppl=inG.filter(p=>p.sector===sec);return `<td ${cellPop(g+' × '+sec,ppl)}>${ppl.length||''}</td>`}).join('')}<td ${cellPop(g+' 전체',inG)}><b>${s.n}</b></td><td class="n">${median(s.ages)??''}</td><td ${cellPop(g+' · 부사장 승진',inG.filter(p=>/부사장/.test(p.title_hist)&&/상무/.test(p.title_hist)))}>${s.vp||''}</td><td ${cellPop(g+' · 퇴임',inG.filter(p=>!p.active))}>${s.exit||''}</td><td ${cellPop(g+' · 재직',inG.filter(p=>p.active))}>${s.active||''}</td></tr>`}).join('')}</table>`;
+  const unc=L.filter(p=>p.origin_group==='미분류');
+  m.innerHTML=`<div class="facts"><div class="fact"><b>${recentN}<i>명</i></b><span>${THIS_YEAR-5}~${THIS_YEAR-1} 신임</span></div><div class="fact"><b>${pct(recent.filter(p=>/지원|인사|전략|감사|커뮤니케이션/.test(p.origin_group)).length,recentN)}<i>%</i></b><span>최근 5년 스태프(지원·기획·인사·준법) 출신</span></div><div class="fact"><b>${pct(recent.filter(p=>/영업/.test(p.origin_group)).length,recentN)}<i>%</i></b><span>최근 5년 지역·현장 영업 출신</span></div><div class="fact"><b>${pct(recent.filter(p=>/R&D|기술/.test(p.origin_group)).length,recentN)}<i>%</i></b><span>최근 5년 R&D·기술 출신</span></div><div class="fact"><b>${pct(L.filter(p=>p.mba).length,L.length)}<i>%</i></b><span>MBA 보유(전체)</span></div><div class="fact"><b>${pct(L.filter(p=>p.region==='서울·수도권').length,L.filter(p=>p.region&&p.region!=='미상').length)}<i>%</i></b><span>수도권 대학 출신</span></div><div class="fact clk" data-pop="${popSet('해외 대학 학·석·박 보유(경영진)', M.filter(p=>(p.schools||[]).some(o=>FOREIGN_RX.test(o.school))))}"><b>${M.filter(p=>(p.schools||[]).some(o=>FOREIGN_RX.test(o.school))).length}<i>명</i></b><span>해외 대학 학·석·박 보유 / 경영진 ${M.length}명 (클릭=명단)</span></div></div>
+  <div class="panel"><h2>${ic('chart')}선임연도 × 출신 그룹 <small>내부 승진 · 선임일 기준</small></h2>${svg}</div>
+  <div class="row">
+    <div class="panel" style="flex:2 1 600px"><h2>출신 그룹 × 사업부 교차표 <small>셀 = 임원 수</small></h2><div class="scroll" style="max-height:480px">${matrix}</div>${unc.length?`<p class="note">미분류: ${unc.map(p=>`<a href="#/person/${encodeURIComponent(p.id)}">${esc(p.name)}(${esc(p.post_at_appt||p.job)})</a>`).join(', ')}</p>`:''}</div>
+    <div class="panel" style="flex:1 1 300px"><h2>선임 시 나이 <small>${THIS_YEAR-9}년 이후 선임자</small></h2>${barList(ages.map(([a,n])=>[a+'세',n]),ages.reduce((s,x)=>s+x[1],0),k=>L.filter(p=>p.appt_year>=THIS_YEAR-9&&p.appt_age+'세'===k))}</div>
+  </div>
+  <div class="row">
+    <div class="panel"><h2>학위 <small>경영진 ${M.length}명</small></h2>${barList(cnt(M,p=>p.degree||'미상'),M.length,k=>M.filter(p=>(p.degree||'미상')===k))}<p class="note">MBA ${M.filter(p=>p.mba).length}명: ${M.filter(p=>p.mba).map(p=>esc(p.name)).join(', ')}</p></div>
+    <div class="panel"><h2>출신 대학 지역 <small>경영진</small></h2>${barList(cnt(M.filter(p=>p.region),p=>p.region),M.filter(p=>p.region).length,k=>M.filter(p=>p.region===k))}</div>
+    <div class="panel"><h2>학교 <small>경영진 · 2명 이상 · 학·석·박 포함</small></h2>${(()=>{const c={}; M.forEach(p=>(p.schools||[]).forEach(o=>c[o.school]=(c[o.school]||0)+1)); return barList(Object.entries(c).sort((a,b)=>b[1]-a[1]).filter(x=>x[1]>=2),M.filter(p=>p.school).length,k=>M.filter(p=>(p.schools||[]).some(o=>o.school===k)))})()}</div>
+    <div class="panel"><h2>전공 <small>경영진</small></h2>${barList(cnt(M.filter(p=>p.major),p=>p.major.replace(/학과$|과$|학부$|학$/,'')).slice(0,12),M.filter(p=>p.major).length,k=>M.filter(p=>p.major.replace(/학과$|과$|학부$|학$/,'')===k))}</div>
+  </div>
+  <div class="panel"><h2>${ic('check')}그루핑 점검표 <small>선임 전 보직 → 선임 시 보직 → 임원</small></h2><div class="scroll" style="max-height:520px"><table class="t"><thead><tr><th>이름</th><th>선임</th><th>선임 전 보직</th><th>선임 시 보직</th><th>현 담당</th><th>매칭 그룹</th><th>매칭 근거</th><th>${SECTOR_LABEL}</th></tr></thead><tbody>${[...L].sort((a,b)=>a.appt_year-b.appt_year).map(p=>`<tr><td><a href="#/person/${encodeURIComponent(p.id)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(p.name)}</a></td><td class="n">${p.appt_year}</td><td>${esc(p.post_before)}</td><td class="wrap2">${esc(p.post_at_appt)}</td><td class="wrap2">${jobTxt(p.job)}</td><td><span class="tag" style="border-color:${groupColor(p.origin_group)}">${esc(p.origin_group)}</span></td><td style="color:var(--mute);font-size:12px">${esc(p.origin_src)}</td><td>${esc(p.sector)}</td></tr>`).join('')}</tbody></table></div></div>
+  <div class="panel"><h2>그룹별 인물 <small>선임연도순</small></h2>${groupsOrdered.filter(g=>gsum[g]).map(g=>`<div style="margin:6px 0"><span class="tag" style="border:1px solid ${groupColor(g)};padding:1px 8px;font-size:12px;border-radius:3px">${esc(g)}</span> <span class="rel">${gsum[g].names.sort((a,b)=>a.appt_year-b.appt_year).map(p=>`<a href="#/person/${encodeURIComponent(p.id)}">${esc(p.name)} <span style="color:var(--mute)">${p.appt_year} · ${[p.post_before,p.post_at_appt].filter((v,i,a)=>v&&a.indexOf(v)===i).map(esc).join(' → ')}</span></a>`).join('')}</span></div>`).join('')}</div>`;
+}
+
+// ---------- 보수 ----------
+function viewPay(){
+  const m=$('#main'); const rows=[];
+  vis(PEOPLE).forEach(p=>p.pay.forEach(x=>{const d=p.pay_detail[x.year]; rows.push({year:x.year,name:p.name,id:p.id,ofcps:x.ofcps,total:x.total,d,p})}));
+  (VIEW.activeOnly?[]:DATA.extra_pay).forEach(e=>e.pay.forEach(x=>{const d=e.pay_detail[x.year]; rows.push({year:x.year,name:e.name,id:null,ofcps:x.ofcps,total:x.total,d,p:null})}));
+  rows.sort((a,b)=>b.year-a.year||b.total-a.total);
+  const sev=rows.filter(r=>r.d&&r.d.퇴직>0);
+  // 퇴직금 vs 임원연수 산점도
+  const W=560,H=260,Lp=46,B=34,T=14; const pts=sev.map(r=>({x:r.d.임원근무년수??(r.p?(r.year-r.p.appt_year):null),y:r.d.퇴직/100,r})).filter(q=>q.x!=null);
+  const mx=Math.max(14,...pts.map(q=>q.x)),my=Math.max(...pts.map(q=>q.y))*1.1; const sx=v=>Lp+(W-Lp-16)*v/mx, sy=v=>T+(H-T-B)*(1-v/my);
+  let sc=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`; for(let v=0;v<=mx;v+=2)sc+=`<line x1="${sx(v)}" x2="${sx(v)}" y1="${T}" y2="${H-B}" stroke="#e4ded0"/><text x="${sx(v)}" y="${H-B+14}" font-size="10" text-anchor="middle" class="mono" fill="#6c6a63">${v}</text>`; [0,0.5,1].forEach(f=>sc+=`<line x1="${Lp}" x2="${W-16}" y1="${sy(my*f)}" y2="${sy(my*f)}" stroke="#e4ded0"/><text x="${Lp-5}" y="${sy(my*f)+4}" font-size="10" text-anchor="end" class="mono" fill="#6c6a63">${(my*f).toFixed(0)}억</text>`);
+  pts.forEach(q=>{sc+=`<circle cx="${sx(q.x)}" cy="${sy(q.y)}" r="6" fill="#8c2f39" fill-opacity=".8" stroke="#faf8f3" stroke-width="1.5"><title>${q.r.name} ${q.r.year} 퇴직소득 ${q.y.toFixed(1)}억 / 임원 ${q.x}년</title></circle><text x="${sx(q.x)+8}" y="${sy(q.y)+4}" font-size="11">${esc(q.r.name)}</text>`});
+  sc+=`<text x="${(W+Lp)/2}" y="${H-4}" font-size="11" text-anchor="middle" fill="#6c6a63">임원 근무 연수(산정기준 문구, 없으면 선임일 기준)</text></svg>`;
+  m.innerHTML=`<div class="facts"><div class="fact"><b>${rows.length}<i>건</i></b><span>개인별 보수 공시(${CO.years?CO.years.pay_first+'~'+CO.years.last:''})</span></div><div class="fact"><b>${sev.length}<i>건</i></b><span>퇴직소득 포함 건</span></div><div class="fact"><b>${median(sev.map(r=>r.d.퇴직/100))?.toFixed(1)}<i>억</i></b><span>퇴직소득 중앙값</span></div><div class="fact"><b>${Math.max(...rows.map(r=>r.total))}<i>억</i></b><span>최대 연간 보수(${(rows.length?rows.find(r=>r.total===Math.max(...rows.map(r=>r.total))).name:'—')})</span></div></div>
+  <div class="row"><div class="panel" style="flex:1 1 560px"><h2>퇴직소득 × 임원 근무 연수</h2>${sc}<p class="note">임원 퇴직금 = 퇴직기준급여(월) × 임원 근무연수 × 지급배수(직급별 1~3.5). 산정기준 문구에 적힌 그대로다.</p></div>
+  <div class="panel" style="flex:1 1 360px"><h2>등기이사·감사 보수 총액 <small>인원 · 1인 평균</small></h2><table class="t"><tr><th>연도</th><th>인원</th><th>총액(억)</th><th>1인 평균(억)</th></tr>${DATA.board_pay.map(b=>`<tr><td class="n">${b.year}</td><td class="n">${b.n}</td><td class="n">${b.total}</td><td class="n">${b.avg}</td></tr>`).join('')}</table><p class="note">직원 1인 평균 급여(합계 기준)는 ${DATA.emp.filter(e=>/합계|전체/.test(e.div)&&e.sex==='남').map(e=>e.year+' '+(e.avg_pay||'-')+'백만').join(', ')}.</p></div></div>
+  <div class="panel"><h2>${ic('list')}개인별 보수 공시 전체 <small>최근순</small></h2><div class="scroll"><table class="t"><thead><tr><th>연도</th><th>이름</th><th>공시 직위</th><th>총액(억)</th><th>급여</th><th>상여</th><th>퇴직소득</th><th>임원근무</th><th>배수</th><th>퇴직기준급여(월,백만)</th><th>비고</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="n">${r.year}</td><td>${r.id?`<a href="#/person/${encodeURIComponent(r.id)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(r.name)}</a>`:esc(r.name)+' <span class="tag">명단 외</span>'}</td><td>${esc(r.ofcps)}</td><td class="n"><b>${r.total}</b></td><td class="n">${r.d?(r.d.급여/100).toFixed(2):''}</td><td class="n">${r.d?(r.d.상여/100).toFixed(2):''}</td><td class="n" style="color:var(--ox)">${r.d&&r.d.퇴직?(r.d.퇴직/100).toFixed(2):''}</td><td class="n">${r.d&&r.d.임원근무년수?r.d.임원근무년수+'년':''}</td><td class="n">${r.d?.지급배수||''}</td><td class="n">${r.d?.퇴직기준급여||''}</td><td class="wrap2" style="font-size:12px;color:var(--mute)">${r.d&&r.d.퇴직?'정식 임원 종료 연도':''}${!r.id?(/수석/.test(r.ofcps)?' 비임원(수석급 장기근속자 퇴직금으로 5억 초과)':' 임원현황 명단에 없음(2021년 이전 미등기 임원 또는 자문역)'):''}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+// ---------- 관계망 ----------
+let netState={types:{'동문':true},scope:'경영진'};
+function viewNetwork(){
+  const m=$('#main');
+  m.innerHTML=`<div class="tools"><label>범위</label><select id="n-scope"><option ${netState.scope==='경영진'?'selected':''}>경영진</option><option ${netState.scope==='전체'?'selected':''}>전체</option></select><span class="note" id="n-count"></span></div>
+  <div class="legend">${groupsOrdered.slice(0,7).map(g=>`<span><i style="background:${groupColor(g)};border-radius:50%"></i>${esc(g)}</span>`).join('')}<span><svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align:-3px;margin-right:4px"><path d="M2,9 l1.5,-5 l2.5,3 l2,-4 l2,4 l2.5,-3 l1.5,5z" fill="#c98500" stroke="#5a3d00" stroke-width=".8"/><circle cx="8" cy="12" r="3.5" fill="#e9c46a" stroke="#5a3d00"/></svg>왕관 = 사장</span><span><i style="background:#6c6a63;border-radius:50%"></i>그룹 전입</span><span><i style="background:${CAT[7]};border-radius:50%"></i>기타·외부</span><span><i style="background:#17181c;border-radius:50%"></i>채운 원 = 재직</span><span><i style="background:#9a9385;border-radius:50%;width:8px;height:8px"></i><i style="background:#9a9385;border-radius:50%;width:14px;height:14px;vertical-align:-3px"></i>원 크기 = 연결 수(선 개수)</span><span><i style="background:none;border:2px dashed #8a8578;border-radius:50%;height:10px"></i>점선 빈 원 = 퇴임(†연도)</span><span><i style="background:none;border-top:2px solid #2a78d6;height:0"></i> 선 = 같은 대학·같은 과정(학사끼리, 석사끼리, MBA끼리)</span><span><i style="background:none;border-top:3px solid #1f3a5f;height:0"></i> 굵은 선 = 재학 시기 겹침 추정(졸업연도 차 ≤ 과정 길이)</span><span>고등학교는 잇지 않음</span></div>
+  <div class="panel" id="n-focus" style="min-height:0;padding:10px 14px;margin-bottom:8px;font-size:13px;display:none"></div>
+  <div class="tl-wrap" id="net" style="height:720px;position:relative"></div>
+  <div class="panel" style="margin-top:14px"><h2>${ic('school')}동문 묶음 <small>같은 학교·같은 과정 2명 이상 · 이름 뒤 숫자 = 졸업연도</small></h2><div id="alumni"></div></div>`;
+  $('#n-scope').onchange=e=>{netState.scope=e.target.value;drawNet()};
+  drawNet();
+}
+function drawNet(){
+  const el=$('#net'); const W=TL_W,H=720;
+  const nodes=vis(netState.scope==='경영진'?MG:PEOPLE).map(p=>({p,x:W/2+(Math.random()-.5)*W*.6,y:H/2+(Math.random()-.5)*H*.6,vx:0,vy:0}));
+  const idx=Object.fromEntries(nodes.map((n,i)=>[n.p.id,i]));
+  const edges=DATA.edges.filter(e=>netState.types[e.type]&&idx[e.a]!=null&&idx[e.b]!=null);
+  const deg={}; edges.forEach(e=>{deg[e.a]=(deg[e.a]||0)+1;deg[e.b]=(deg[e.b]||0)+1});
+  // 간단한 힘 기반 배치
+  for(let it=0;it<320;it++){const k=it<200?0.9:0.4;
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];for(let j=i+1;j<nodes.length;j++){const b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+0.01,d=Math.sqrt(d2);const f=Math.min(40,2600/d2);dx/=d;dy/=d;a.vx+=dx*f;a.vy+=dy*f;b.vx-=dx*f;b.vy-=dy*f;}}
+    edges.forEach(e=>{const a=nodes[idx[e.a]],b=nodes[idx[e.b]];const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+0.01;const f=(d-90)*0.012;a.vx+=dx/d*f;a.vy+=dy/d*f;b.vx-=dx/d*f;b.vy-=dy/d*f});
+    nodes.forEach(n=>{n.vx+=(W/2-n.x)*0.004;n.vy+=(H/2-n.y)*0.006;n.x+=n.vx*k;n.y+=n.vy*k;n.vx*=0.6;n.vy*=0.6;n.x=Math.max(30,Math.min(W-30,n.x));n.y=Math.max(24,Math.min(H-24,n.y))});
+  }
+  const style={'동문':'stroke="#2a78d6" stroke-opacity=".55"','보직계승':'stroke="#8c2f39" stroke-dasharray="5 3" stroke-opacity=".7"','그룹계열':'stroke="#6c6a63" stroke-dasharray="2 3" stroke-opacity=".6"'};
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  edges.forEach(e=>{const a=nodes[idx[e.a]],b=nodes[idx[e.b]];s+=`<line class="ed" data-a="${e.a}" data-b="${e.b}" data-w="${e.same_time?2.6:1.4}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke-width="${e.same_time?2.6:1.4}" ${e.same_time?'stroke="#1f3a5f" stroke-opacity=".85"':style[e.type]}><title>${esc(e.label)}${e.same_time?' · 재학 시기 겹침 추정':''}${e.years&&(e.years[0]||e.years[1])?' ('+(e.years[0]||'?')+'/'+(e.years[1]||'?')+')':''}</title></line>`});
+  nodes.forEach(n=>{const p=n.p;const r=5+Math.min(9,(deg[p.id]||0)*1.1);const c=p.track==='내부 성장 임원'?(groupsOrdered.indexOf(p.origin_group)<7?groupColor(p.origin_group):CAT[7]):/^사장\(/.test(p.track)?'#e9c46a':p.track==='그룹 전입 임원'?'#6c6a63':CAT[7];
+    const isCEO=/^사장\(/.test(p.track); const rr=isCEO?Math.max(r,9):r;
+    const crown=isCEO?`<path class="crown" d="M${n.x-8},${n.y-rr-1} l2.5,-7 l4,4.5 l1.5,-6.5 l1.5,6.5 l4,-4.5 l2.5,7 z" fill="#c98500" stroke="#5a3d00" stroke-width="1" style="pointer-events:none"/>`:'';
+    s+=p.active
+      ?`<g class="nd" data-id="${p.id}">${crown}<circle class="dot" cx="${n.x}" cy="${n.y}" r="${rr}" fill="${isCEO?'#e9c46a':c}" stroke="${isCEO?'#5a3d00':'#17181c'}" stroke-width="${isCEO?2:1.5}" style="cursor:pointer"><title>클릭: 이 사람과 연결된 사람만 보기</title></circle><text class="nm" x="${n.x+rr+3}" y="${n.y+4}" font-size="11" font-weight="600" style="cursor:pointer"><title>클릭: 개인 상세</title>${esc(p.name)}</text></g>`
+      :`<g class="nd" data-id="${p.id}">${crown}<circle class="dot" cx="${n.x}" cy="${n.y}" r="${rr}" fill="#faf8f3" stroke="${isCEO?'#c98500':c}" stroke-width="2" stroke-dasharray="3 2" style="cursor:pointer"><title>클릭: 이 사람과 연결된 사람만 보기</title></circle><text class="nm" x="${n.x+rr+3}" y="${n.y+4}" font-size="11" fill="#8a8578" style="cursor:pointer"><title>클릭: 개인 상세</title>${esc(p.name)} <tspan font-size="10">†${p.exit_year}</tspan></text></g>`});
+  s+=`</svg>`; el.innerHTML=s; $('#n-count').textContent=`${nodes.length}명 · 연결 ${edges.length}`;
+  const svg=el.querySelector('svg'); let focused=null;
+  function focus(id){ focused=id; const nb=new Set([id]); edges.forEach(e=>{if(e.a===id)nb.add(e.b); if(e.b===id)nb.add(e.a)});
+    svg.querySelectorAll('.nd').forEach(g=>{const on=nb.has(g.dataset.id); g.style.opacity=on?1:0.07; g.querySelector('.nm').style.fontWeight=g.dataset.id===id?'700':''; g.querySelector('.dot').setAttribute('stroke-width', g.dataset.id===id?'3':(on?'1.5':'1'));});
+    svg.querySelectorAll('.ed').forEach(l=>{const on=l.dataset.a===id||l.dataset.b===id; l.style.opacity=on?1:0.04; if(on) l.setAttribute('stroke-width',String(Number(l.dataset.w||1.4)+1));});
+    const p=BY[id]; const rel=edges.filter(e=>e.a===id||e.b===id).map(e=>({o:BY[e.a===id?e.b:e.a],t:e.type,l:e.label}));
+    const by={}; rel.forEach(r=>{(by[r.t]=by[r.t]||[]).push(r)});
+    $('#n-focus').style.display='block'; $('#n-focus').innerHTML=`<b>${esc(p.name)}</b> <span class="note" style="margin:0">${esc(p.title)} · ${esc(p.job)} · 연결 ${rel.length}</span> &nbsp; <a href="#/person/${encodeURIComponent(id)}" class="chip" style="padding:2px 9px">상세 보기</a> <span class="chip" id="n-clear" style="padding:2px 9px">해제</span><div style="margin-top:6px">${Object.entries(by).map(([t,rs])=>`<div><span class="tag" style="font-size:11px;border:1px solid var(--hair2);padding:1px 6px;border-radius:3px">${esc(t)}</span> <span class="rel">${rs.map(r=>`<a href="#/person/${encodeURIComponent(r.o.id)}">${esc(r.o.name)} <span style="color:var(--mute)">${esc(r.l)}</span></a>`).join('')}</span></div>`).join('')}</div>`;
+    $('#n-clear').onclick=clear; }
+  function clear(){ focused=null; svg.querySelectorAll('.nd').forEach(g=>{g.style.opacity=1; g.querySelector('.nm').style.fontWeight=''; g.querySelector('.dot').setAttribute('stroke-width','1.5')}); svg.querySelectorAll('.ed').forEach(l=>{l.style.opacity=1; l.setAttribute('stroke-width',l.dataset.w||'1.4')}); $('#n-focus').innerHTML=''; $('#n-focus').style.display='none'; }
+  el.querySelectorAll('.nd').forEach(g=>{const p=BY[g.dataset.id];
+    g.addEventListener('mousemove',e=>showTip(e,tipPerson(p))); g.addEventListener('mouseleave',hideTip);
+    g.querySelector('.dot').addEventListener('click',e=>{e.stopPropagation(); focused===p.id?clear():focus(p.id)});
+    g.querySelector('.nm').addEventListener('click',e=>{e.stopPropagation(); location.hash='#/person/'+encodeURIComponent(p.id)});});
+  svg.addEventListener('click',e=>{if(e.target===svg) clear();});
+  const sch={}; PEOPLE.forEach(p=>(p.schools||[]).forEach(o=>{if(o.degree==='고졸')return; const k=o.school+' '+o.degree; (sch[k]=sch[k]||[]).push(p)}));
+  $('#alumni').innerHTML=Object.entries(sch).filter(([k,v])=>v.length>=2).sort((a,b)=>b[1].length-a[1].length).map(([k,v])=>`<div style="margin:5px 0"><b>${esc(k)}</b> <span class="note">${v.length}명</span> · <span class="rel">${v.sort((a,b)=>{const ya=((a.schools||[]).find(x=>x.school+' '+x.degree===k)||{}).year||9999, yb=((b.schools||[]).find(x=>x.school+' '+x.degree===k)||{}).year||9999; return ya-yb}).map(p=>{const o=(p.schools||[]).find(x=>x.school+' '+x.degree===k)||{}; return `<a href="#/person/${encodeURIComponent(p.id)}">${esc(p.name)} <span style="color:var(--mute)">${o.year||''}${p.school===o.school&&p.major?' '+esc(p.major):''}</span></a>`}).join('')}</span></div>`).join('');
+}
+
+// ---------- 자회사·인선 ----------
+function viewAffilCeoOnly(){
+  const m=$('#main'); const C=AFFIL.s1_ceos||[]; const med=a=>{a=a.filter(x=>x!=null).sort((x,y)=>x-y);return a.length?(a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2):null};
+  const medTen=med(C.filter(c=>c.ended).map(c=>c.tenure_years));
+  m.innerHTML=`<div class="facts"><div class="fact"><b>${C.length}<i>명</i></b><span>${esc(CO.name)} 사장(DART 확인분)</span></div><div class="fact"><b>${medTen??'?'}<i>년</i></b><span>사장 재임 중앙값(퇴임자)</span></div><div class="fact"><b>${med(C.map(c=>c.age_at))??'?'}<i>세</i></b><span>선임 나이 중앙값</span></div></div>
+  <div class="panel"><h2>${ic('flag')}${esc(CO.name)} 사장 임기표 <small>그룹 파견 · 재임과 출신</small></h2><table class="t"><tr><th>순서</th><th>이름</th><th>출생</th><th>선임</th><th>종료</th><th>재임</th><th>선임 나이</th><th>직전</th></tr>${C.map((c,i)=>`<tr><td class="n">${i+1}</td><td><a href="#/person/${encodeURIComponent(c.pid)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(c.name)}</a></td><td class="n">${c.birth_year||''}</td><td class="n">${c.appointed||''}</td><td class="n">${c.ended||'재임 중'}</td><td class="n">${c.tenure_years??''}년</td><td class="n">${c.age_at||''}</td><td class="wrap">${esc(c.origin||'')}</td></tr>`).join('')}</table></div>
+  <div class="panel"><h2>${ic('building')}자회사 인선</h2><p class="note">${esc(CO.name)}의 자회사 공시(대표이사·임원 임기)는 아직 수집하지 않았다. 수집 대상 후보: ${(CO.affiliate_hint||[]).map(esc).join(', ')||'미정'}.</p></div>`;
+}
+function viewAffil(){
+  if(!(AFFIL.companies&&Object.keys(AFFIL.companies).length)) return viewAffilCeoOnly();
+  const m=$('#main'); const pat=AFFIL.pattern||{}; const chains=AFFIL.ceo_chain;
+  const s1=AFFIL.s1_ceos; const ten=s1.filter(c=>c.ended).map(c=>c.tenure_years); const medTen=median(ten);
+  const cur=s1[s1.length-1]; const nextChg=cur&&cur.appointed?(parseInt(cur.appointed.slice(0,4))+Math.round(medTen||3)):null;
+  const ceoRows=s1.map((c,i)=>`<tr><td class="n">${i+1}번째</td><td><a href="#/person/${encodeURIComponent(c.pid)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(c.name)}</a></td><td class="n">${c.birth_year||''}</td><td class="n">${c.appointed||''}</td><td class="n">${c.ended?c.ended.slice(0,7):'재임'}</td><td class="n">${c.tenure_years??''}년 (사장 ${c.nth||(BY[c.pid]?BY[c.pid].nth_year:'')}년차)</td><td class="n">${c.age_at||''}세</td><td>${esc(c.origin)}</td></tr>`).join('');
+  const gantt=(chain,x0,x1)=>{const W=1100,L=120,H=30+chain.length*26; const x=v=>L+(v-x0)/(x1-x0)*(W-L-110); let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`; for(let y=Math.ceil(x0);y<=x1;y++)s+=`<line x1="${x(y)}" x2="${x(y)}" y1="18" y2="${H-6}" stroke="#e4ded0"/><text x="${x(y)+2}" y="12" font-size="10" class="mono" fill="#6c6a63">${y}</text>`; s+=`<line x1="${x(NOW)}" x2="${x(NOW)}" y1="18" y2="${H-6}" stroke="#8c2f39" stroke-dasharray="3 3"/>`;
+    chain.forEach((t,i)=>{const y=24+i*26; const a=t.appointed?dec(t.appointed):x0; const e=t.ended?dec(t.ended):NOW; const te=t.term_end?dec(t.term_end):null; const col=t.s1_track==='내부 성장 임원'?'#3f7bc8':'#9a9385';
+      s+=`<text x="${L-8}" y="${y+12}" font-size="12" text-anchor="end" font-weight="500">${esc(t.name)}</text><rect x="${x(Math.max(a,x0))}" y="${y+3}" width="${Math.max(2,x(e)-x(Math.max(a,x0)))}" height="12" fill="${col}" rx="2"><title>${t.appointed}~${t.ended||'현재'} ${t.tenure_years||''}년 · ${esc(t.prior)}</title></rect>`;
+      if(te&&!t.ended) s+=`<rect x="${x(e)}" y="${y+3}" width="${Math.max(0,x(te)-x(e))}" height="12" fill="none" stroke="${col}" stroke-dasharray="3 2"/><text x="${x(te)+3}" y="${y+13}" font-size="10" fill="#6c6a63">임기 ${t.term_end.slice(0,7)}</text>`;
+      const nth=t.appointed?Math.max(1,(t.ended?parseInt(t.ended.slice(0,4)):THIS_YEAR)-parseInt(t.appointed.slice(0,4))+((t.ended?parseInt(t.ended.slice(5,7)):11)>=3?0:0)):null; s+=`<text x="${x(Math.max(a,x0))+4}" y="${y+13}" font-size="10" fill="#fff" font-weight="600">${t.tenure_years?t.tenure_years+'년'+(nth?' · '+nth+'년차':''):''}</text>`;});
+    return s+`</svg>`};
+  const compBlock=c=>{const chain=chains[c]||[]; const terms=AFFIL.terms.filter(t=>t.company===c); const audits=terms.filter(t=>t.position==='감사'); const dirs=terms.filter(t=>t.position==='사내이사'&&!chain.some(x=>x.name===t.name));
+    const rows=[...chain.map(t=>({...t,position:'대표이사'})),...dirs,...audits].map(t=>`<tr><td>${esc(t.position)}</td><td>${t.s1_pid?`<a href="#/person/${encodeURIComponent(t.s1_pid)}" style="font-weight:600;border-bottom:1px solid var(--hair2)">${esc(t.name)}</a>`:esc(t.name)}</td><td class="n">${t.appointed||''}</td><td class="n">${t.ended||'재임'}</td><td class="n">${t.term_end||''}</td><td class="n">${t.tenure_years?t.tenure_years+'년'+(t.appointed?' ('+Math.max(1,(t.ended?parseInt(t.ended.slice(0,4)):THIS_YEAR)-parseInt(t.appointed.slice(0,4)))+'년차)':''):''}</td><td class="wrap2">${esc(t.prior)}</td><td class="n">${t.age_at?t.age_at+'세':''}</td><td class="n">${t.gap_from_s1_exit!=null?t.gap_from_s1_exit+'년':''}</td><td>${(t.renew||[]).join('·')}</td><td class="wrap2" style="font-size:12px;color:var(--mute)">${esc(t.concurrent||'')}</td></tr>`).join('');
+    return `<div class="panel"><h2>${esc(c)} <small>대표이사 승계 · 파랑 = ${esc(CO.name)} 내부 성장 임원 출신 · 점선 = 남은 임기</small></h2>${gantt(chain,THIS_YEAR-16,THIS_YEAR+3)}<div class="scroll" style="max-height:420px;margin-top:10px"><table class="t"><thead><tr><th>직위</th><th>이름</th><th>선임</th><th>종료</th><th>임기만료</th><th>재임</th><th>공시상 경력(선임 당시)</th><th>선임 나이</th><th>${esc(CO.name)} 퇴임→선임</th><th>신임/중임</th><th>겸직</th></tr></thead><tbody>${rows}</tbody></table></div></div>`};
+  const boards=AFFIL.boards.map(b=>`<div class="panel" style="flex:1 1 460px"><h2>${esc(b.company)} 다음 대표 <small>${esc(b.size_hint)} 자리</small></h2>
+    <div class="kv"><dt>현 대표</dt><dd>${b.current.s1_pid?`<a href="#/person/${encodeURIComponent(b.current.s1_pid)}"><b>${esc(b.current.name)}</b></a>`:esc(b.current.name)} · 선임 ${b.current.appointed||''} · <span style="color:var(--ox)">임기 만료 ${b.current.term_end||'미공시'}</span></dd><dt>결정 시점</dt><dd>${esc(b.note)}</dd></div>
+    <h3>후보 가능성 지수 <small style="font-weight:400;color:var(--mute)">(경험 규칙 합산 100점 만점, 확률 아님)</small></h3>
+    <div class="bars">${b.candidates.map(cd=>`<div class="bar" style="grid-template-columns:190px 1fr 46px"><span><a href="#/person/${encodeURIComponent(cd.pid)}">${esc(cd.name)}</a> <span style="color:var(--mute);font-size:11.5px">${cd.birth_year} ${esc(cd.title)}</span></span><div class="b" style="width:${cd.score}%;background:${cd.score>=75?'#1f3a5f':cd.score>=60?'#3f7bc8':'#9fbfe6'}" title="${esc(cd.why.join(' / '))}"></div><span class="v">${cd.score}</span></div>`).join('')}</div>
+    <details class="src" style="margin-top:8px"><summary>근거 보기</summary><ul style="font-size:12.5px">${b.candidates.map(cd=>`<li><b>${esc(cd.name)}</b> ${esc(cd.job)} — ${esc(cd.why.join(' · '))}</li>`).join('')}</ul></details></div>`).join('');
+  const auditChain=AFFIL.terms.filter(t=>t.position==='감사').sort((a,b)=>(a.appointed||'')>(b.appointed||'')?1:-1);
+  m.innerHTML=`<div class="facts"><div class="fact"><b>${medTen??'?'}<i>년</i></b><span>${esc(CO.name)} 사장 재임 중앙값</span></div><div class="fact"><b>${nextChg||'?'}<i>년 전후</i></b><span>다음 사장 교체 예상(현 사장 ${cur?cur.appointed.slice(0,7):''} 선임 + 중앙값)</span></div><div class="fact"><b>${pat.tenure_median??'?'}<i>년</i></b><span>자회사 대표 임기 중앙값(1임기 3년)</span></div><div class="fact"><b>${pat.age_at_median??'?'}<i>세</i></b><span>자회사 대표 선임 나이 중앙값</span></div><div class="fact"><b>${pat.gap_median??'?'}<i>년</i></b><span>${esc(CO.name)} 퇴임→자회사 대표 간격(자문역 경유)</span></div></div>
+  <div class="panel"><h2>${ic('flag')}${esc(CO.name)} 사장 임기표 <small>재임과 출신</small></h2><table class="t"><tr><th>순서</th><th>이름</th><th>출생</th><th>선임</th><th>종료</th><th>재임</th><th>선임 나이</th><th>직전 자리(그룹사 공시)</th></tr>${ceoRows}</table>
+  </div>
+  ${Object.keys(chains).map(compBlock).join('')}
+  <h2 style="font:600 17px var(--serif);margin:18px 0 8px">예측 보드 · 다음 자회사 대표</h2>
+  <div class="row">${boards}</div>
+  <p class="note">지수 구성: 선임 나이대(중앙값 ±1세 35점, ±3세 20점) + ${esc(CO.name)} 재임 연차 압력(부사장 6년차↑·상무 5년차↑ 25점, 상무 4년차 12점) + 자리 급(15점) + 사업 적합성(15점). 이미 퇴임해 자문역 단계로 추정되는 사람은 40점 기본. 사용자 그루핑과 사내 정보로 가중치를 바꿀 수 있다(build_affil.py).</p>
+  <details class="src"><summary>임원의 변동 공시 원문 행(${(AFFIL.changes||[]).length}건)</summary><pre class="raw">${(AFFIL.changes||[]).map(c=>`${c.company} ${c.filed} [${c.position||''}] ${c.raw}`).join('\n')}</pre></details>`;
+}
+// ---------- 자료·규칙 ----------
+function viewAbout(){
+  const hc=DATA.headcount; const yrs=Object.keys(hc); const Y=CO.years||{};
+  const TITLES=['대표이사사장','사장','대표이사부사장','부사장','전무','상무','사내이사','기타비상무이사','사외이사','이사','상근감사','비상근감사','감사'];
+  $('#main').innerHTML=`<div class="row"><div class="panel"><h2>${ic('book')}출처</h2><ul style="margin:0;padding-left:18px;line-height:1.8">
+  <li>임원현황: DART OpenAPI <code>exctvSttus</code>(${Y.first||''}~${Y.last||''} 사업보고서 + 분기·반기보고서)에 더해, <b>사업보고서 원문(document.xml)의 임원현황 표를 직접 파싱</b>해 미등기임원을 복원했다(구조화 API는 2020년 이전 등기임원만 제공). 회사 ${esc(CO.name)} (corp_code ${CO.corp_code}).</li>
+  <li>보수: <code>indvdlByPay</code>(5억 이상 개인별), <code>hmvAuditIndvdlBySttus</code>(이사·감사 개인별), <code>hmvAuditAllSttus</code>(이사·감사 전체), <code>empSttus</code>(직원 현황). 사업보고서 원문의 '개인별 보수지급금액 산정기준' 표에서 급여·상여·퇴직소득·임원근무연수·지급배수를 뽑았다.</li>
+  <li>사장 취임일: '대표이사 변경' 수시공시와 분기보고서로 보정.</li>
+  <li>DART 소급 범위: ${esc(CO.name)} 공시 원문은 ${esc(CO.first_doc||'(미확인)')}. 구조화 임원현황 API는 2014 사업연도부터 응답. 미등기임원은 API로는 2021년부터지만 원문에는 그 전 보고서에도 있다.</li></ul></div>
+  <div class="panel"><h2>${ic('check')}판정 규칙</h2><ul style="margin:0;padding-left:18px;line-height:1.8">
+  <li><b>동일 인물</b> = 이름(공백 제거) + 출생연월.</li>
+  <li><b>임원 선임일</b> = 보고서들의 재직기간 시작일 중 가장 이른 날짜(등기 전환으로 시작일이 갱신된 사례를 보정). 없으면 첫 공시 연도 말로 추정(≤ 표시).</li>
+  <li><b>퇴임</b> = 퇴직소득이 공시된 보고서 연도가 마지막 등장 보고서 연도와 같으면 그해 12월, 다르면 그해 1월. 퇴직소득 공시가 없으면 마지막 등장 보고서 연도 12월. 사장은 후임 사장 취임일(공동대표는 개인별).</li>
+  <li><b>출신 그룹</b> = 선임 당시 보직 → 선임 전 보직 → 현 담당 순으로 <code>group_map.json</code> 규칙에 첫 매치. 이름별 override 가능.</li>
+  <li><b>${SECTOR_LABEL}</b> = 담당업무·경력 문구의 키워드(설정 sector_rules) 최빈값.</li>
+  <li><b>동문</b> = 같은 학교 + 같은 과정(학사끼리·석사끼리·MBA끼리). 고졸은 잇지 않는다. 졸업연도 차이가 과정 길이 안이면 '같이 다녔을 듯'.</li></ul></div></div>
+  <div class="panel"><h2>사업보고서 연도별 직위 인원</h2><div class="scroll" style="max-height:360px"><table class="t"><tr><th>연도</th>${TITLES.map(t=>`<th>${t}</th>`).join('')}<th>합계</th></tr>${yrs.map(y=>`<tr><td class="n">${y}</td>${TITLES.map(t=>`<td class="n">${hc[y][t]||''}</td>`).join('')}<td class="n"><b>${Object.values(hc[y]).reduce((a,b)=>a+b,0)}</b></td></tr>`).join('')}</table></div></div>
+  <div class="panel"><h2>전 직장 추적 범위 <small>사장·계열사 전입 임원 대상, 해당 회사 사업보고서 원문 임원현황</small></h2><p>조회: ${(DATA.origin_scan.scanned||[]).map(esc).join(' · ')||'없음'}</p><p>조회 불가: ${(DATA.origin_scan.not_available||[]).map(esc).join(' · ')||'-'}</p></div>
+  <div class="panel"><h2>한계</h2><ul style="margin:0;padding-left:18px;line-height:1.8"><li>설정한 첫 사업연도(${Y.first||''}) 이전 퇴임자는 없다. 그 이전 선임자의 공시 전 구간은 선임일로만 확인된 재직이다.</li><li>입사연도·팀장 임명연도·고과는 비공시. 졸업연도를 입사 근사치로 쓴다.</li><li>5억 미만 보수는 개인별 공시가 없으므로 상무급 퇴직금은 대부분 보이지 않는다.</li><li>출신 그룹과 ${SECTOR_LABEL}은 문구 기반 추정이다. <code>group_map.json</code>·설정으로 교정한다.</li></ul></div>
+  <div class="footer">v${APP_VERSION} · 파이프라인: fetch_dart → fetch_docs → fetch_pay → fetch_ceo_changes → parse_exec_docs → parse_pay → analyze → build_data → build_affil → render_app · 생성 ${DATA.generated}</div>`;
+}
+(function(){ let z=1; try{z=Number(localStorage.getItem('font_zoom'))||1}catch(e){} applyZoom(z); document.querySelectorAll('#font-chips .chip').forEach(c=>c.onclick=()=>{const nz=Number(c.dataset.z); try{localStorage.setItem('font_zoom',String(nz))}catch(e){}; applyZoom(nz); route();}); })();   // 모든 선언 뒤에서 실행(TL_W는 let)
+route();
+</script>
+</body>
+</html>
