@@ -36,6 +36,18 @@ python add_company.py LG이노텍
 
 회사명이 바뀐 회사(예: 삼성엔지니어링 → 삼성E&A)는 DART 고유번호가 같으므로 현재 이름으로 넣고 옛 이름을 `--self`에 적어 주면 됩니다.
 
+## 화면
+
+LG이노텍을 `python add_company.py LG이노텍` 한 줄로 만든 결과입니다(2016~2025 사업연도 + 2026 분기, 임원 131명, 약 1분).
+
+| 생애선 | 명부 |
+|---|---|
+| ![생애선](docs/img/timeline.png) | ![명부](docs/img/people.png) |
+
+| 개인 도감 | 출신·스펙 |
+|---|---|
+| ![개인 도감](docs/img/person.png) | ![출신·스펙](docs/img/origins.png) |
+
 ## 무엇이 만들어지나
 
 단일 HTML 안에 7개 화면이 들어 있습니다.
