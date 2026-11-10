@@ -1,0 +1,8 @@
+{
+  "name": "dart-exec-chronicle",
+  "version": "0.9.6",
+  "description": "Korean listed-company executives from DART filings: build an executive chronicle HTML and query ages, schools, promotions, pay, CEO succession.",
+  "author": { "name": "dart-exec-chronicle contributors" },
+  "license": "MIT",
+  "keywords": ["dart", "korea", "executives", "chaebol", "disclosure"]
+}

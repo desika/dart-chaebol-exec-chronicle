@@ -81,6 +81,29 @@ Output: `dist/App_LG이노텍_<version>.html`. Default range is the last ten fis
 
 Renamed companies (e.g. 삼성엔지니어링 → 삼성E&A) keep the same DART code: use the current name and put the old one in `--self`.
 
+## Use it from Claude Code (skill + MCP)
+
+The repo ships as a Claude Code plugin: a **skill** that knows the workflow and the data fields, and an **MCP server** (`mcp_server.py`, standard library, stdio) with nine tools: `search_company`, `build_company` (runs in the background), `build_status`, `list_companies`, `company_summary`, `query_people`, `find_person`, `ceo_succession`, `classmates`.
+
+```
+/plugin marketplace add desika/dart-exec-chronicle
+/plugin install dart-exec-chronicle@dart-exec-chronicle
+```
+
+Then just talk:
+
+```
+> LG이노텍 임원 도감 만들어 줘
+> 현대자동차 사장 계보랑 평균 취임 나이 알려 줘
+> 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
+```
+
+Without the plugin, cloning the repo and starting `claude` inside it registers the MCP server from `.mcp.json`; point Claude at `skills/dart-exec-chronicle/SKILL.md` for the workflow. Any other MCP client works with:
+
+```json
+{ "mcpServers": { "dart-exec-chronicle": { "command": "python", "args": ["/path/to/dart-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "your_key", "PYTHONUTF8": "1" } } } }
+```
+
 ## Pipeline
 
 `add_company.py` runs these in order. Each can also be run alone with `COMPANY=<slug>` in the environment.

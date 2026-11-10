@@ -90,6 +90,29 @@ python add_company.py LG이노텍
 
 회사명이 바뀐 회사(예: 삼성엔지니어링 → 삼성E&A)는 DART 고유번호가 같으므로 현재 이름으로 넣고 옛 이름을 `--self`에 적어 주면 됩니다.
 
+## Claude Code에서 쓰기 (스킬 + MCP)
+
+이 저장소는 Claude Code 플러그인이기도 합니다. 작업 절차와 데이터 필드를 아는 **스킬**, 그리고 표준 라이브러리로만 짠 **MCP 서버**(`mcp_server.py`, stdio)에 도구 9개가 있습니다: `search_company`, `build_company`(백그라운드 실행), `build_status`, `list_companies`, `company_summary`, `query_people`, `find_person`, `ceo_succession`, `classmates`.
+
+```
+/plugin marketplace add desika/dart-exec-chronicle
+/plugin install dart-exec-chronicle@dart-exec-chronicle
+```
+
+그다음은 말로 합니다.
+
+```
+> LG이노텍 임원 도감 만들어 줘
+> 현대자동차 사장 계보랑 평균 취임 나이 알려 줘
+> 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
+```
+
+플러그인 없이도 저장소를 clone 해서 그 안에서 `claude`를 띄우면 `.mcp.json`의 MCP 서버가 등록되고, 절차는 `skills/dart-exec-chronicle/SKILL.md`를 읽히면 됩니다. 다른 MCP 클라이언트(Claude Desktop 등)는 아래 설정으로 붙습니다.
+
+```json
+{ "mcpServers": { "dart-exec-chronicle": { "command": "python", "args": ["/path/to/dart-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "발급받은키", "PYTHONUTF8": "1" } } } }
+```
+
 ## 파이프라인
 
 `add_company.py`가 아래를 순서대로 실행합니다. 각 단계는 환경변수 `COMPANY=<slug>`를 주고 따로 실행할 수도 있습니다.

@@ -1,0 +1,12 @@
+{
+  "name": "dart-exec-chronicle",
+  "owner": { "name": "desika" },
+  "plugins": [
+    {
+      "name": "dart-exec-chronicle",
+      "source": "./",
+      "description": "Korean listed-company executives from DART filings: build an executive chronicle HTML and query ages, schools, promotions, pay, CEO succession.",
+      "version": "0.9.6"
+    }
+  ]
+}
