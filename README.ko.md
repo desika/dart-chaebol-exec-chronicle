@@ -1,4 +1,6 @@
-# dart-exec-chronicle
+# dart-chaebol-exec-chronicle
+
+한국 대기업(재벌) 임원 연대기, DART 공시 기반
 
 **한국 상장사 임원 전원의 생애를 공시에서 복원한다. 명령 한 줄, HTML 파일 하나.**
 
@@ -95,8 +97,8 @@ python add_company.py LG이노텍
 이 저장소는 Claude Code 플러그인이기도 합니다. 작업 절차와 데이터 필드를 아는 **스킬**, 그리고 표준 라이브러리로만 짠 **MCP 서버**(`mcp_server.py`, stdio)에 도구 9개가 있습니다: `search_company`, `build_company`(백그라운드 실행), `build_status`, `list_companies`, `company_summary`, `query_people`, `find_person`, `ceo_succession`, `classmates`.
 
 ```
-/plugin marketplace add desika/dart-exec-chronicle
-/plugin install dart-exec-chronicle@dart-exec-chronicle
+/plugin marketplace add desika/dart-chaebol-exec-chronicle
+/plugin install dart-chaebol-exec-chronicle@dart-chaebol-exec-chronicle
 ```
 
 그다음은 말로 합니다.
@@ -107,10 +109,10 @@ python add_company.py LG이노텍
 > 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
 ```
 
-플러그인 없이도 저장소를 clone 해서 그 안에서 `claude`를 띄우면 `.mcp.json`의 MCP 서버가 등록되고, 절차는 `skills/dart-exec-chronicle/SKILL.md`를 읽히면 됩니다. 다른 MCP 클라이언트(Claude Desktop 등)는 아래 설정으로 붙습니다.
+플러그인 없이도 저장소를 clone 해서 그 안에서 `claude`를 띄우면 `.mcp.json`의 MCP 서버가 등록되고, 절차는 `skills/dart-chaebol-exec-chronicle/SKILL.md`를 읽히면 됩니다. 다른 MCP 클라이언트(Claude Desktop 등)는 아래 설정으로 붙습니다.
 
 ```json
-{ "mcpServers": { "dart-exec-chronicle": { "command": "python", "args": ["/path/to/dart-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "발급받은키", "PYTHONUTF8": "1" } } } }
+{ "mcpServers": { "dart-chaebol-exec-chronicle": { "command": "python", "args": ["/path/to/dart-chaebol-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "발급받은키", "PYTHONUTF8": "1" } } } }
 ```
 
 ## 파이프라인

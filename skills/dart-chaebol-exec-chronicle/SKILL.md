@@ -1,9 +1,9 @@
 ---
-name: dart-exec-chronicle
+name: dart-chaebol-exec-chronicle
 description: Build and query the executive chronicle of any Korean listed company from DART filings. Use when the user names a Korean company (삼성전자, LG이노텍, SK하이닉스, 현대자동차 …) and wants its executives, CEO succession, promotion ages, schools/degrees, pay or severance, year-end personnel changes, or an "임원 도감" / executive timeline HTML. Also use for "임원 학력", "사장 계보", "연말 인사", "누가 승진했나", "chaebol executives".
 ---
 
-# dart-exec-chronicle skill
+# dart-chaebol-exec-chronicle skill
 
 This repository rebuilds every executive's career of a Korean listed company from DART (금융감독원 전자공시) and renders a single HTML "임원 도감". Code only; data is produced locally.
 

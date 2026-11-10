@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "dart-exec-chronicle": {
+    "dart-chaebol-exec-chronicle": {
       "command": "python",
       "args": ["${CLAUDE_PLUGIN_ROOT:-.}/mcp_server.py"],
       "env": { "PYTHONUTF8": "1" }

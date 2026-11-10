@@ -1,4 +1,6 @@
-# dart-exec-chronicle
+# dart-chaebol-exec-chronicle
+
+The Korean chaebol executive chronicle, built from DART filings
 
 **Who actually runs Korea's chaebol? Every executive, every degree, every paycheck, every exit. Rebuilt from public filings with one command.**
 
@@ -86,8 +88,8 @@ Renamed companies (e.g. 삼성엔지니어링 → 삼성E&A) keep the same DART 
 The repo ships as a Claude Code plugin: a **skill** that knows the workflow and the data fields, and an **MCP server** (`mcp_server.py`, standard library, stdio) with nine tools: `search_company`, `build_company` (runs in the background), `build_status`, `list_companies`, `company_summary`, `query_people`, `find_person`, `ceo_succession`, `classmates`.
 
 ```
-/plugin marketplace add desika/dart-exec-chronicle
-/plugin install dart-exec-chronicle@dart-exec-chronicle
+/plugin marketplace add desika/dart-chaebol-exec-chronicle
+/plugin install dart-chaebol-exec-chronicle@dart-chaebol-exec-chronicle
 ```
 
 Then just talk:
@@ -98,10 +100,10 @@ Then just talk:
 > 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
 ```
 
-Without the plugin, cloning the repo and starting `claude` inside it registers the MCP server from `.mcp.json`; point Claude at `skills/dart-exec-chronicle/SKILL.md` for the workflow. Any other MCP client works with:
+Without the plugin, cloning the repo and starting `claude` inside it registers the MCP server from `.mcp.json`; point Claude at `skills/dart-chaebol-exec-chronicle/SKILL.md` for the workflow. Any other MCP client works with:
 
 ```json
-{ "mcpServers": { "dart-exec-chronicle": { "command": "python", "args": ["/path/to/dart-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "your_key", "PYTHONUTF8": "1" } } } }
+{ "mcpServers": { "dart-chaebol-exec-chronicle": { "command": "python", "args": ["/path/to/dart-chaebol-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "your_key", "PYTHONUTF8": "1" } } } }
 ```
 
 ## Pipeline
