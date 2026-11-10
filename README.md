@@ -6,6 +6,8 @@ The Korean chaebol executive chronicle, built from DART filings
 
 [한국어](README.ko.md) · English
 
+![tour](docs/img/tour.gif)
+
 ---
 
 Samsung, LG, SK, Hyundai. A few thousand people sit at the top of the companies that make the phones, chips, cars and batteries the world runs on. You can name the chairmen. Can you name the 131 executives of LG Innotek, when each was promoted, where they went to school, and which of them got dropped from the annual report last December?
@@ -24,22 +26,38 @@ Pure Python standard library. No dependencies, no server, no database.
 - Which schools? Which majors? How much of the C-suite is Seoul-National-University engineering? How many MBAs? (LG Innotek: 62% Seoul-area universities, 1% MBA.)
 - Who was promoted from R&D versus sales versus staff functions? (Of 36 appointed in 2021–2025: 39% R&D, 22% staff, 0% field sales.)
 - What does a president take home, and what severance does he leave with? (Current LG Innotek CEO: 9.91억 → 9.39억 → 12.51억 won, 2022–2025.)
-- Who went to the same university program at the same time, and are they now in the same boardroom?
+- Who went to the same university program at the same time, and are they now in the same boardroom? (Samsung E&A: 14 Korea University BAs among the executives, 304 classmate links in total.)
 - Which post is the launch pad: who held the job before the current CEO, and where did they end up?
 
 Every number links back to the filing it came from.
 
 ## What it looks like
 
-A sample run on **LG Innotek** (LG이노텍), 2016–2025 annual reports plus 2026 quarterlies, took about one minute: 131 executives, 49 serving, 3 CEOs in succession (박종석 2016-04 → 정철동 2019-01 → 문혁수 2024-03), median CEO tenure 4 years, median age at CEO appointment 58.
+**Samsung E&A** (삼성E&A), 156 executives. Three CEOs in a row, each tenure bar carrying every pay filing. The second CEO's disclosed pay climbs from 10.65억 to 56.6억 won in his final year.
 
-| Lifelines | Roster |
-|---|---|
-| ![Lifelines](docs/img/timeline.png) | ![Roster](docs/img/people.png) |
+![Samsung E&A lifelines](docs/img/sena_timeline.png)
 
-| Person page | Origins & profile |
-|---|---|
-| ![Person page](docs/img/person.png) | ![Origins](docs/img/origins.png) |
+Who studied with whom. 304 classmate links; the dense cluster in the middle is Korea University chemical engineering.
+
+![Samsung E&A network](docs/img/sena_network.png)
+
+Where the executives came from and how old they were when appointed. 2016 alone minted 55 executives, 31 of them from sales.
+
+![Samsung E&A origins](docs/img/sena_origins.png)
+
+One person, every year of disclosure side by side: title, duty, registration, tenure, pay, career text. Yellow cells are what changed from the year before.
+
+![Samsung E&A person page](docs/img/sena_person.png)
+
+Pay and severance: who got severance after how many executive years, board pay totals, every individual pay filing.
+
+![Samsung E&A pay](docs/img/sena_pay.png)
+
+**LG Innotek** (LG이노텍), 131 executives, built from scratch in about a minute with `python add_company.py LG이노텍`.
+
+![LG Innotek lifelines](docs/img/timeline.png)
+
+![LG Innotek roster](docs/img/people.png)
 
 Seven views in one file:
 
