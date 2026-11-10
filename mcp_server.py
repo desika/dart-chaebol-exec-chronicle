@@ -236,7 +236,7 @@ def _handle(req):
     m = req.get("method"); rid = req.get("id"); prm = req.get("params") or {}
     if m == "initialize":
         return {"jsonrpc": "2.0", "id": rid, "result": {"protocolVersion": prm.get("protocolVersion", "2024-11-05"),
-                "capabilities": {"tools": {}}, "serverInfo": {"name": "dart-chaebol-exec-chronicle", "version": "0.9.6"}}}
+                "capabilities": {"tools": {}}, "serverInfo": {"name": "dart-chaebol-exec-chronicle", "version": "0.9.7"}}}
     if m == "tools/list":
         return {"jsonrpc": "2.0", "id": rid, "result": {"tools": [{"name": n, "description": d, "inputSchema": s} for n, d, s, _ in TOOLS]}}
     if m == "tools/call":

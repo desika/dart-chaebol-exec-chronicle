@@ -6,7 +6,7 @@
       "name": "dart-chaebol-exec-chronicle",
       "source": "./",
       "description": "Korean listed-company executives from DART filings: build an executive chronicle HTML and query ages, schools, promotions, pay, CEO succession.",
-      "version": "0.9.6"
+      "version": "0.9.7"
     }
   ]
 }

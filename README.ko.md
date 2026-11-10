@@ -118,7 +118,13 @@ python add_company.py LG이노텍
 > 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
 ```
 
-플러그인 없이도 저장소를 clone 해서 그 안에서 `claude`를 띄우면 `.mcp.json`의 MCP 서버가 등록되고, 절차는 `skills/dart-chaebol-exec-chronicle/SKILL.md`를 읽히면 됩니다. 다른 MCP 클라이언트(Claude Desktop 등)는 아래 설정으로 붙습니다.
+플러그인 없이 쓰려면 저장소를 clone 한 뒤 서버를 한 번 등록합니다(절차는 `skills/dart-chaebol-exec-chronicle/SKILL.md`를 읽히면 됩니다).
+
+```
+claude mcp add dart-chaebol-exec-chronicle -e PYTHONUTF8=1 -- python /path/to/dart-chaebol-exec-chronicle/mcp_server.py
+```
+
+다른 MCP 클라이언트(Claude Desktop 등)는 아래 설정으로 붙습니다.
 
 ```json
 { "mcpServers": { "dart-chaebol-exec-chronicle": { "command": "python", "args": ["/path/to/dart-chaebol-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "발급받은키", "PYTHONUTF8": "1" } } } }

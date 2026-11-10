@@ -118,7 +118,13 @@ Then just talk:
 > 삼성전자에서 2021년 이후 선임된 상무 중 서울대 출신만 뽑아 줘
 ```
 
-Without the plugin, cloning the repo and starting `claude` inside it registers the MCP server from `.mcp.json`; point Claude at `skills/dart-chaebol-exec-chronicle/SKILL.md` for the workflow. Any other MCP client works with:
+Without the plugin, clone the repo and register the server once (then point Claude at `skills/dart-chaebol-exec-chronicle/SKILL.md` for the workflow):
+
+```
+claude mcp add dart-chaebol-exec-chronicle -e PYTHONUTF8=1 -- python /path/to/dart-chaebol-exec-chronicle/mcp_server.py
+```
+
+Any other MCP client works with:
 
 ```json
 { "mcpServers": { "dart-chaebol-exec-chronicle": { "command": "python", "args": ["/path/to/dart-chaebol-exec-chronicle/mcp_server.py"], "env": { "DART_API_KEY": "your_key", "PYTHONUTF8": "1" } } } }
