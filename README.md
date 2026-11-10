@@ -33,7 +33,7 @@ Every number links back to the filing it came from.
 
 ## What it looks like
 
-**Samsung E&A** (삼성E&A), 156 executives. Three CEOs in a row, each tenure bar carrying every pay filing. The second CEO's disclosed pay climbs from 10.65억 to 56.6억 won in his final year.
+**Samsung E&A** (삼성E&A), 156 executives. Three CEOs in a row, each tenure bar carrying every pay filing. The second CEO's disclosed pay climbs from 10.65억 to 56.6억 won in the final year of the term.
 
 ![Samsung E&A lifelines](docs/img/sena_timeline.png)
 
